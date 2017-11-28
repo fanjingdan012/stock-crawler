@@ -9,8 +9,8 @@ if __name__ == "__main__":
     #SZ 0-951
     #fromRow=1
     shOrSz = 'SZ'
-    rangeStart = 120
-    rangeEnd = 130
-    fromRow = 7450
-    data = get_data(shOrSz, rangeStart, rangeEnd, '/stock/f10/cfstatement.json', '../data/cfs')
+    rangeStart = 170
+    rangeEnd = 174
+    fromRow = 10449
+    data = get_data(shOrSz, rangeStart, rangeEnd, '/stock/f10/cfstatement.json?size=10000&page=1', '../data/cfs')
     write_f10_xls(shOrSz, fromRow, data, '../data/cfs')
