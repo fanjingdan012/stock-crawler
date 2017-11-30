@@ -28,12 +28,11 @@ def get_data(sh_sz, range_start, range_end, urlPattern, fileName):
     f = open(fileName+".txt", "a",encoding='utf-8')
     XUEQIU_DOMAIN = 'https://xueqiu.com'
     headers = getHeaders()
-    stockList = readStockList.read_stock_list(sh_sz, range_start, range_end)
-    print(stockList)
+    stock_list = readStockList.read_stock_list(sh_sz, range_start, range_end)
+    print(stock_list)
     results = []
-    for stock in stockList:
-        result = []
-        result.append(stock)
+    for stock in stock_list:
+        result = [stock]
         url = XUEQIU_DOMAIN+urlPattern+'&symbol=' + stock
         print(url)
         f.write(url)
@@ -50,14 +49,14 @@ def get_data(sh_sz, range_start, range_end, urlPattern, fileName):
     return results
 
 
-def getFieldColDict(shOrSz,workbook):
-    fieldColDict = dict()
-    oldSheet = workbook.sheet_by_index(0)
-    if (shOrSz == 'SZ'):
-        oldSheet = workbook.sheet_by_index(1)
-    for col in range(oldSheet.ncols):
-        fieldColDict[oldSheet.cell_value(0, col)] = col
-    return fieldColDict
+def getFieldColDict(sh_sz, workbook):
+    field_col_dict = dict()
+    old_sheet = workbook.sheet_by_index(0)
+    if sh_sz == 'SZ':
+        old_sheet = workbook.sheet_by_index(1)
+    for col in range(old_sheet.ncols):
+        field_col_dict[old_sheet.cell_value(0, col)] = col
+    return field_col_dict
 
 
 def write_f10_xls(shOrSz, fromRow, results,fileName):
