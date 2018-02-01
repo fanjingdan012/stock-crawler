@@ -2,14 +2,14 @@
 import urllib.request
 import json
 import readStockList
-import MySQLdb
+# import MySQLdb
 import xlrd
 import xlwt
 from xlutils.copy import copy
 import os
-from xueqiu import getData
+from xueqiu import get_data
 from xueqiu import getFieldColDict
-
+from xueqiu import write_f10_xls
 
 
 def writeXls(shOrSz, fromRow, results):
@@ -48,8 +48,11 @@ if __name__=="__main__":
     #SH 0-287-1779
     #SZ 0-951
     #fromRow=1
-    shOrSz='SZ'
-    rangeStart=100
-    rangeEnd=300
-    fromRow=1861
-    writeXls(shOrSz,fromRow,getData(shOrSz,rangeStart,rangeEnd,'/stock/f10/balsheet.json'))
+    sh_sz='SZ'
+    range_start=301
+    range_end=303
+    fromRow=16116
+    stock_list = readStockList.read_stock_list(sh_sz, range_start, range_end)
+    data = get_data(stock_list, '/stock/f10/balsheet.json?size=10000&page=1','../data/bs')
+
+    write_f10_xls(sh_sz,fromRow,data,'../data/bs')

@@ -20,15 +20,15 @@ def getHeaders ():
            #'Host': 'xueqiu.com',
            #'Connection':'keep-alive',
            #'Accept':'*/*',
-           'cookie':'xq_a_token=a8d434ddd975f5752965fa782596bd0b5b008376; xq_a_token.sig=ke78qTMMk1J4blZPe-jY53Uy9Ec; xq_r_token=437547d929e3cc54630bfd58136879694e1ae4a9; xq_r_token.sig=iYuNwCitZuVpyfkOu6_LLtaQn6E; s=et11okl5s2; u=811511157993130; device_id=da9025ffdb657b9460445f57e7be5368; aliyungf_tc=AQAAADToGVkdRgIACbB+3oLvs1StU/PX; __utma=1.800988467.1511158014.1511339632.1511406223.5; __utmc=1; __utmz=1.1511158014.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none); Hm_lvt_1db88642e346389874251b5a1eded6e3=1511157995,1511226946,1511233574,1511329392; Hm_lpvt_1db88642e346389874251b5a1eded6e3=1511406315'
+           'cookie':'aliyungf_tc=AQAAAAsuYwGnLgwACbB+3hxv6M8ZPZp+; xq_a_token=9fe68a74102e36c95d83680e70152894648189b5; xq_a_token.sig=Wp2RDfA0m2SS1--eP6TyzeJrNqE; xq_r_token=31f446a0ba3f00cf0ec805ef008a3ad7d7ef5f6e; xq_r_token.sig=-MGYDh3MlR7dkoz1vYeWUVTTyoQ; u=801516958113421; device_id=bfb52968438e18b2ff72f911fc12a605; Hm_lvt_1db88642e346389874251b5a1eded6e3=1516958114; __utmc=1; __utmz=1.1516958117.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none); s=eb17c099s1; __utma=1.455231070.1516958117.1516958117.1517470926.2; Hm_lpvt_1db88642e346389874251b5a1eded6e3=1517470926'
     }
 
 
-def get_data(sh_sz, range_start, range_end, urlPattern, fileName):
+def get_data(stock_list, urlPattern, fileName):
     f = open(fileName+".txt", "a",encoding='utf-8')
     XUEQIU_DOMAIN = 'https://xueqiu.com'
     headers = getHeaders()
-    stock_list = readStockList.read_stock_list(sh_sz, range_start, range_end)
+    # stock_list = readStockList.read_stock_list(sh_sz, range_start, range_end)
     print(stock_list)
     results = []
     for stock in stock_list:
@@ -49,24 +49,20 @@ def get_data(sh_sz, range_start, range_end, urlPattern, fileName):
     return results
 
 
-def getFieldColDict(sh_sz, workbook):
+def getFieldColDict( workbook):
     field_col_dict = dict()
     old_sheet = workbook.sheet_by_index(0)
-    if sh_sz == 'SZ':
-        old_sheet = workbook.sheet_by_index(1)
     for col in range(old_sheet.ncols):
         field_col_dict[old_sheet.cell_value(0, col)] = col
     return field_col_dict
 
 
-def write_f10_xls(shOrSz, fromRow, results,fileName):
+def write_f10_xls(fromRow, results,fileName):
     fileName1 = fileName+".xls"
     oldwb = xlrd.open_workbook(fileName1, 'r')
-    fieldColDict = getFieldColDict(shOrSz,oldwb)
+    fieldColDict = getFieldColDict(oldwb)
     newwb = copy(oldwb)
     sheet = newwb.get_sheet(0)
-    if(shOrSz=='SZ'):
-        sheet = newwb.get_sheet(1)
     row = fromRow
     for i in range(0, len(results)):
         result = results[i]
