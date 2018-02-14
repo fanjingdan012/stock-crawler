@@ -1,40 +1,110 @@
-#多序列条状图
-#解决的方法吧每个类别占据的空间，分为多个部分，想要显示几个长条，将其分为几个部分，建议在增加一个额外的空间， 以便区分两个相邻的类别
 import matplotlib.pyplot as plt
 import numpy as np
-
-
-
 import pandas as pd
-import numpy as np
-#使用pandas读取excel文件
-df=pd.read_excel('../data/bs1.xls')
-# names=['code','reportdate','totasset','totliabsharequi']
-# df = df[df['code']=='SH600060']
-print (df)
+
+
+dfo=pd.read_excel('../data/is1.xls',skiprows=1)
 
 plt.style.use('ggplot')
 
 
-#excel文件的写出
-#data.to_excel("abc.xlsx",sheet_name="abc",index=False,header=True)  #该条语句会运行失败，原因在于写入的对象是np数组而不是DataFrame对象,只有DataFrame对象才能使用to_excel方法。
+from mpl_toolkits.mplot3d import axes3d
 
-# DataFrame(data).to_excel("abc.xlsx",sheet_name="123",index=False,header=True)
+df = dfo[dfo['code']=='SH600983']
+df.fillna(0,inplace=True)
+# fig, ax = plt.subplots(figsize=(120,8))
+fig = plt.figure()
+ax = fig.add_subplot(211)
+width=0.1
+t = df['enddate']
+bti = df['biztotinco']
+bi=df['bizinco']
+inteinco=df['inteinco']
+pouninco=df['pouninco']
+otherbizinco= df['otherbizinco']
+btc = df['biztotcost']
+bc = df['bizcost']
+pp= df['perprofit']
+biztax= df['biztax']
+salesexpe= df['salesexpe']
+manaexpe= df['manaexpe']
+finexpe= df['finexpe']
+asseimpaloss= df['asseimpaloss']
+inveinco= df['inveinco']
+nonoreve= df['nonoreve']
+nonoexpe= df['nonoexpe']
+noncassetsdisl= df['noncassetsdisl']
+incotaxexpe= df['incotaxexpe']
+netprofit= df['netprofit']
 
-#excel文件和pandas的交互读写，主要使用到pandas中的两个函数,一个是pd.ExcelFile函数,一个是to_excel函数
 
 
 
 
-# index = np.arange(5)
-# values1 = [5, 7, 3, 4, 6]
-# values2 = [6, 6, 4, 5, 7]
-# values3 = [5, 6, 5, 4, 6]
-#
-# plt.axis([0, 5, 0, 8])
-# plt.title("A Multiseries Bar Chart", fontsize = 0)
-# plt.bar(index, df[(df[''])], bw, color = 'b')
-# plt.bar(index+bw, values2, bw, color = 'g')
-# plt.bar(index+2*bw, values3, bw, color = 'r')
-# plt.xticks(index+1.5*bw, ['A', 'B', 'C', 'D', 'E'])
-# plt.show()
+
+
+ind = np.arange(len(t))  # the x locations for the groups
+# bar1 inco
+rects1 = ax.bar(ind, bti, width)
+# bar 2 inco
+bizincob = ax.bar(ind + width, bi, width, bottom=inveinco+pouninco+inteinco+otherbizinco)
+otherbizincob = ax.bar(ind + width, otherbizinco, width, bottom=inveinco+pouninco+inteinco)
+inteincob = ax.bar(ind + width, inteinco, width,bottom=inveinco+pouninco)
+pounincob = ax.bar(ind + width, pouninco, width,bottom=inveinco)
+inveincob = ax.bar(ind + width, inveinco, width)
+# bar 3 co
+rects3 = ax.bar(ind + 2*width, btc, width,bottom=pp)
+# bar 4 co
+rects4 = ax.bar(ind + 3*width, bc, width,bottom=pp+asseimpaloss+finexpe+manaexpe+salesexpe+biztax)
+biztaxb = ax.bar(ind + 3*width, biztax, width,bottom=pp+asseimpaloss+finexpe+manaexpe+salesexpe)
+salesexpeb = ax.bar(ind + 3*width, salesexpe, width,bottom=pp+asseimpaloss+finexpe+manaexpe)
+manaexpeb = ax.bar(ind + 3*width, manaexpe, width,bottom=pp+asseimpaloss+finexpe)
+finexpeb = ax.bar(ind + 3*width, finexpe, width,bottom=pp+asseimpaloss)
+asseimpalossb = ax.bar(ind + 3*width, asseimpaloss, width,bottom=pp)
+ppb    = ax.bar(ind + 3*width, pp, width)
+# bar 5 inco
+nonoreveb = ax.bar(ind + 4*width, nonoreve, width,bottom=pp)
+# bar 6 co
+nonoexpeb = ax.bar(ind + 5*width, nonoexpe, width,bottom=netprofit+incotaxexpe+noncassetsdisl)
+noncassetsdislb = ax.bar(ind + 5*width, noncassetsdisl, width,bottom=netprofit+incotaxexpe)
+incotaxexpeb = ax.bar(ind + 5*width, incotaxexpe, width,bottom=netprofit)
+netprofitb    = ax.bar(ind + 5*width, netprofit, width)
+
+ax.set_xticks(ind + width / 6)
+ax.set_xticklabels(t)
+
+
+# ax2 managing is
+ax2 = fig.add_subplot(212)
+# inco o
+bizincob2 = ax2.bar(ind , bi, width, bottom=otherbizinco)
+otherbizincob2 = ax2.bar(ind , otherbizinco, width )
+# co o
+bcb2 = ax2.bar(ind + width, -bc, width,bottom=otherbizinco+bi)
+biztaxb2 = ax2.bar(ind + width, -biztax, width,bottom=otherbizinco+bi-bc)
+salesexpeb2 = ax2.bar(ind + width, -salesexpe, width,bottom=otherbizinco+bi-bc-biztax)
+manaexpeb2 = ax2.bar(ind + width, -manaexpe, width,bottom=otherbizinco+bi-bc-biztax-salesexpe)
+
+# inco f
+inteincob2 = ax2.bar(ind + 2*width, inteinco, width,bottom=noncassetsdisl+nonoreve+inveinco+pouninco)
+pounincob2 = ax2.bar(ind + 2*width, pouninco, width,bottom=noncassetsdisl+nonoreve+inveinco)
+inveincob2 = ax2.bar(ind + 2*width, inveinco, width,bottom=noncassetsdisl+nonoreve)
+nonoreveb2 = ax2.bar(ind + 2*width, nonoreve, width,bottom=noncassetsdisl)
+noncassetsdislb2 = ax2.bar(ind + 2*width, noncassetsdisl, width)
+# co f
+finexpeb2 = ax2.bar(ind + 3*width, finexpe, width,bottom=incotaxexpe+nonoexpe+asseimpaloss)
+asseimpalossb2 = ax2.bar(ind + 3*width, asseimpaloss, width,bottom=incotaxexpe+nonoexpe)
+nonoexpeb2 = ax2.bar(ind + 3*width, nonoexpe, width,bottom=incotaxexpe)
+incotaxexpeb2 = ax2.bar(ind + 3*width, incotaxexpe, width)
+
+# netprofitb    = ax.bar(ind + 5*width, netprofit, width)
+
+
+# ppb2 = ax2.bar(ind +width, pp, width, color='y')
+
+
+
+
+ax.set_xticks(ind + width / 2)
+ax.set_xticklabels(t)
+plt.show()

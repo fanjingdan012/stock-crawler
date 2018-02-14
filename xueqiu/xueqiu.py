@@ -20,7 +20,7 @@ def getHeaders ():
            #'Host': 'xueqiu.com',
            #'Connection':'keep-alive',
            #'Accept':'*/*',
-           'cookie':'aliyungf_tc=AQAAAAsuYwGnLgwACbB+3hxv6M8ZPZp+; xq_a_token=9fe68a74102e36c95d83680e70152894648189b5; xq_a_token.sig=Wp2RDfA0m2SS1--eP6TyzeJrNqE; xq_r_token=31f446a0ba3f00cf0ec805ef008a3ad7d7ef5f6e; xq_r_token.sig=-MGYDh3MlR7dkoz1vYeWUVTTyoQ; u=801516958113421; device_id=bfb52968438e18b2ff72f911fc12a605; Hm_lvt_1db88642e346389874251b5a1eded6e3=1516958114; __utmc=1; __utmz=1.1516958117.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none); s=eb17c099s1; __utma=1.455231070.1516958117.1516958117.1517470926.2; Hm_lpvt_1db88642e346389874251b5a1eded6e3=1517470926'
+           'cookie':'aliyungf_tc=AQAAAAsuYwGnLgwACbB+3hxv6M8ZPZp+; device_id=bfb52968438e18b2ff72f911fc12a605; Hm_lvt_1db88642e346389874251b5a1eded6e3=1516958114; __utmc=1; __utmz=1.1516958117.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none); s=eb17c099s1; __utma=1.455231070.1516958117.1517540626.1517550622.5; xq_a_token=5c915d14d91dc74b5f2e4c3b4753137ae66c1926; xq_a_token.sig=CGCHkBovlWaQtWbwukG6L3FRNIA; xq_r_token=e796a61232e2cf0d90d560d30af22b227d8f7eeb; xq_r_token.sig=VeCkcFeNm3Vszkg9DbEZW9Pg0pA; u=581518588598316; Hm_lpvt_1db88642e346389874251b5a1eded6e3=1518588600'
     }
 
 
@@ -31,12 +31,14 @@ def get_data(stock_list, urlPattern, fileName):
     # stock_list = readStockList.read_stock_list(sh_sz, range_start, range_end)
     print(stock_list)
     results = []
-    for stock in stock_list:
+    for index, row in stock_list.iterrows():
+        stock=row['code']
         result = [stock]
         url = XUEQIU_DOMAIN+urlPattern+'&symbol=' + stock
         print(url)
         f.write(url)
         f.write('\n')
+        result.append(row['name'])
         result.append(url)
         req = urllib.request.Request(url, headers=headers)
         content = urllib.request.urlopen(req).read().decode('utf-8')
@@ -63,25 +65,30 @@ def write_f10_xls(fromRow, results,fileName):
     fieldColDict = getFieldColDict(oldwb)
     newwb = copy(oldwb)
     sheet = newwb.get_sheet(0)
+    sheet.write(0, 0, 'code')
+    sheet.write(0, 1, 'name')
+    sheet.write(0, 2, 'url')
     row = fromRow
     for i in range(0, len(results)):
         result = results[i]
         stock=result[0]
-        href = result[1]
-        jsonStr=result[2]
+        name = result[1]
+        href = result[2]
+        jsonStr=result[3]
         data=json.loads(jsonStr)
         if (('list' in data)& (data['list'] is not None)):
             listJson = data['list']
             for item in listJson:
                 sheet.write(row, 0, stock)
-                sheet.write(row, 1, href)
+                sheet.write(row, 1, name)
+                sheet.write(row, 2, href)
                 for key, value in item.items():
                     col=fieldColDict.get(key,-1)
                     if(col==-1):
                         if(fieldColDict):
                             col=max(fieldColDict.values())+1
                         else:
-                            col=2
+                            col=3
                         sheet.write(0,col,key)
                         fieldColDict[key]=col
                         print('newly added col:'+key)

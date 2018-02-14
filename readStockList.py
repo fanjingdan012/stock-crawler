@@ -1,5 +1,5 @@
 from xlrd import open_workbook
-
+import pandas as pd
 
 def read_stock_list(sh_sz, range_start, range_end):
     stock_list = []
@@ -25,3 +25,7 @@ def read_industry_stock_list(range_start, range_end):
         for i in range(range_start, range_end):
             stock_list.append(sheet.cell_value(i, 0))
     return stock_list
+def read_industry_stock_list2(industry):
+    dfo = pd.read_excel('../data/industry.xlsx')
+    df = dfo[dfo['industry'] == industry]
+    return df
