@@ -5,13 +5,13 @@ import pandas as pd
 from matplotlib import style
 if __name__ == "__main__":
     style.use('ggplot')
-    dfo=pd.read_excel('../data/bs1.xls')
-
+    dfo=pd.read_excel('../data/bs1.xls',skiprows=1)
     # fig, ax = plt.subplots(figsize=(15,8))
     fig = plt.figure()
     ax = fig.add_subplot(211)
     width=0.3
-    df = dfo[dfo['code']=='SZ002290']
+    df = dfo[dfo['code']=='SZ002497']
+    df.fillna(0, inplace=True)
     t = df['reportdate']
     a = df['totasset']
     ca = df['totcurrasset']
@@ -30,14 +30,14 @@ if __name__ == "__main__":
 
 
     ax.set_xticks(ind + width / 2)
-    ax.set_xticklabels(t)
+    ax.set_xticklabels(t,size='small',rotation=90)
 
 
 
 
     ax2 = fig.add_subplot(212)
     width=0.3
-    df2 = dfo[dfo['code']=='SZ000016']
+    df2 = dfo[dfo['code']=='SH600618']
     t2 = df2['reportdate']
     a2 = df2['totasset']
     ca2 = df2['totcurrasset']
@@ -55,8 +55,8 @@ if __name__ == "__main__":
     clb2 = ax2.bar(ind2 + width, cl2, width,bottom=e2+ll2)
 
 
-    ax.set_xticks(ind + width / 2)
-    ax.set_xticklabels(t)
+    ax2.set_xticks(ind + width / 2)
+    # ax.set_xticklabels(t)
     plt.show()
 
 

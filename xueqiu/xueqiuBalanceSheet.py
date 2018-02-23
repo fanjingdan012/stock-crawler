@@ -52,6 +52,6 @@ if __name__=="__main__":
     range_start=2871
     range_end=2908
     fromRow=1
-    stock_list = readStockList.read_industry_stock_list(range_start, range_end)
-    data = get_data(stock_list, '/stock/f10/balsheet.json?size=10000&page=1','../data/bs_家电')
-    write_f10_xls(fromRow,data,'../data/bs_家电')
+    stock_list = readStockList.read_industry_stock_list2('化工行业')
+    data = get_data(stock_list, '/stock/f10/balsheet.json?size=10000&page=1','../data/bs_化工行业')
+    write_f10_xls(fromRow,data,'../data/bs_化工行业')
