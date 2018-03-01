@@ -141,7 +141,7 @@ function display(d) {
 		/* Chrome displays this on top */
 		.on("click", function(d) { 
 			if(!d.children){
-				window.open(d.url); //TODO change
+				window.open("https://xueqiu.com/S/"+d.symbol); //TODO change
 			}
 		})
 		.append("title")
@@ -154,7 +154,7 @@ function display(d) {
 		/* Firefox displays this on top */
 		.on("click", function(d) { 
 			if(!d.children){
-				window.open(d.url); 
+				window.open("https://xueqiu.com/S/"+d.symbol); 
 			}
 		})
 		.attr("class","foreignobj")
