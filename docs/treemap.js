@@ -37,7 +37,17 @@ var svg = d3.select("#chart").append("svg")
 	.attr("transform", "translate(" + margin.left + "," + margin.top + ")")
 	.style("shape-rendering", "crispEdges");
 
-var color = d3.scale.category20c();
+//var color = d3.scale.category20c();
+var color1 = d3.scale
+              .linear()
+              .domain([0.00,10.00])
+              .range(['#000', '#f00']);
+var color2= d3.scale
+              .linear()
+              .domain([-10.00,0.00])
+              .range(['#0f0', '#000']);
+	
+	
 
 var grandparent = svg.append("g")
 	.attr("class", "grandparent");
@@ -65,6 +75,12 @@ function accumulate(d) {
 	return d.children
 	? d.value = d.children.reduce(function(p, v) { return p + accumulate(v); }, 0)
 	: d.value;
+}
+	
+function accumulate_percent(d) {
+	return d.children
+	? d.percent = d.value?((d.children.reduce(function(p, v) { return p + accumulate_percent(v)*v.value; }, 0))/d.value):0
+	: d.percent;
 }
 
 // Compute the treemap layout recursively such that each group of siblings
@@ -125,11 +141,11 @@ function display(d) {
 		/* Chrome displays this on top */
 		.on("click", function(d) { 
 			if(!d.children){
-				window.open(d.url); 
+				window.open(d.url); //TODO change
 			}
 		})
 		.append("title")
-		.text(function(d) { return d.name + " " + formatNumber(d.size); }); /*should be d.value*/
+		.text(function(d) { return d.name + " " + formatNumber(d.percent); }); /*should be d.value*/
 
 	/* Adding a foreign object instead of a text object, allows for text wrapping */
 	g.append("foreignObject")
@@ -205,7 +221,7 @@ function rect(rect) {
  		.attr("y", function(d) { return y(d.y); })
 		.attr("width", function(d) { return x(d.x + d.dx) - x(d.x); })
 		.attr("height", function(d) { return y(d.y + d.dy) - y(d.y); })
-		.style("background", function(d) { return d.parent ? color(d.name) : null; });
+		.style("background", function(d) { return d.percent>0 ? color1(d.percent) : color2(d.percent); });
 }
 
 function foreign(foreign){ /* added */
@@ -228,7 +244,8 @@ function loadJSONFile(file) {
 
 function loadData(root) {
 	initialize(root);
-	accumulate(root);
+	var b=accumulate(root);
+	var a = accumulate_percent(root);
 	layout(root);
 	display(root);
 }
