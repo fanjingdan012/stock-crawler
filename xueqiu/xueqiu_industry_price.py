@@ -108,10 +108,10 @@ def write_csv(date):
 
 
 if __name__ == "__main__":
-    write_csv('2018-02-28')
+    write_csv('2018-03-02')
     # industry_df = read_industry_df()
-    # data = get_xueqiu_industry_quote(industry_df, '../data/industry_quote/2018-03-01')
-    # write_f10_xls(1, data, '../data/industry_quote/2018-03-01')
+    # data = get_xueqiu_industry_quote(industry_df, '../data/industry_quote/2018-03-02')
+    # write_f10_xls(1, data, '../data/industry_quote/2018-03-02')
 
 
 
