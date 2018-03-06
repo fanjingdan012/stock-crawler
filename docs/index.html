@@ -6,7 +6,9 @@
 <script src="https://code.jquery.com/jquery-1.7.1.js"></script>
 <h2>A股收盘概览</h2>
 <p>大小表示成交额，颜色表示涨跌幅，点击以进入，点击最上方长条以返回上级</p>
-<p>日期写在参数里，类似'?date=2018-02-28'，默认今天</p>
+<p>日期也可以写在参数里，类似'?date=2018-02-28'，默认今天</p>
+<br> Date (yyyy-MM-dd):
+<input type="text" id="dateInput" value="2018-02-28">
 <p id="chart">
 <p id="rawdata">
 
@@ -45,6 +47,7 @@
 		// You can comment out the whole csv section if you just have a JSON file.
     // loadJSONFile('data/portaldata.json');
         date=getQueryParam('date');
+        date = document.getElementById("dateInput").value;
         if(!date){
             var nowDate = new Date();
             var nowMonth = nowDate.getMonth() + 1;
