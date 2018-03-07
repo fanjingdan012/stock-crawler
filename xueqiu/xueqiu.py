@@ -20,7 +20,7 @@ def getHeaders ():
            #'Host': 'xueqiu.com',
            #'Connection':'keep-alive',
            #'Accept':'*/*',
-           'cookie':'aliyungf_tc=AQAAAAsuYwGnLgwACbB+3hxv6M8ZPZp+; device_id=bfb52968438e18b2ff72f911fc12a605; Hm_lvt_1db88642e346389874251b5a1eded6e3=1516958114; __utmc=1; __utmz=1.1516958117.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none); s=eb17c099s1; __utma=1.455231070.1516958117.1517540626.1517550622.5; xq_a_token=5c915d14d91dc74b5f2e4c3b4753137ae66c1926; xq_a_token.sig=CGCHkBovlWaQtWbwukG6L3FRNIA; xq_r_token=e796a61232e2cf0d90d560d30af22b227d8f7eeb; xq_r_token.sig=VeCkcFeNm3Vszkg9DbEZW9Pg0pA; u=581518588598316; Hm_lpvt_1db88642e346389874251b5a1eded6e3=1518588600'
+           'cookie':'device_id=bfb52968438e18b2ff72f911fc12a605; s=eb17c099s1; aliyungf_tc=AQAAAHb7ilL4EgEACbB+3naX4bau6aED; __utmc=1; __utmz=1.1520233626.11.5.utmcsr=fanjingdan012.github.io|utmccn=(referral)|utmcmd=referral|utmcct=/stock-crawler/index.html; Hm_lvt_1db88642e346389874251b5a1eded6e3=1520233626,1520233656,1520233731,1520233773; xq_a_token=19f5e0044f535b6b1446bb8ae1da980a48bbe850; xq_a_token.sig=aaTVFAX9sVcWtOiu-5L8dL-p40k; xq_r_token=6d30415b5f855c12fd74c6e2fb7662ea40272056; xq_r_token.sig=rEvIjgpbifr6Q_Cxwx7bjvarJG0; u=361520406370054; __utma=1.455231070.1516958117.1520233626.1520406371.12; __utmt=1; __utmb=1.2.10.1520406371; Hm_lpvt_1db88642e346389874251b5a1eded6e3=1520406375'
     }
 
 
