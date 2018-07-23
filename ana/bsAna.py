@@ -4,7 +4,7 @@ import numpy as np
 import pandas as pd
 from matplotlib import style
 style.use('ggplot')
-dfo=pd.read_excel('../data/bs1.xls')
+dfo=pd.read_excel('../data/bs_家电.xls',header=1)
 
 # fig, ax = plt.subplots(figsize=(15,8))
 fig = plt.figure()
