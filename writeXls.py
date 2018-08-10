@@ -2,6 +2,9 @@
 import xlrd
 import xlwt
 from datetime import date,datetime
+import pandas as pd
+
+
 def set_style(name,height,bold=False):
     style = xlwt.XFStyle()  # 初始化样式
 
@@ -41,7 +44,20 @@ def write_excel(fileName):
         print ('Sheet:',s.name)
         for i in range(s.nrows):
             print( s.cell_value(i, 1))
+
+
+def write_xlsx_pd():
+    df = pd.DataFrame([['a', 'b'], ['c', 'd']],
+    index = ['row 1', 'row 2'],
+    columns = ['col 1', 'col 2'])
+
+    df = pd.read_json(_, orient='records')
+
+
+    df.to_excel('aa.xlsx', sheet_name='Random Data')
+
+
 if __name__ == '__main__':
     #generate_workbook()
     #read_excel()
-    write_excel()
+    write_xlsx_pd()

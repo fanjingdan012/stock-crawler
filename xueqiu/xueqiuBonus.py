@@ -1,4 +1,4 @@
-#-*-coding:utf-8 -*-
+# -*-coding:utf-8 -*-
 import urllib.request
 import json
 import readStockList
@@ -10,21 +10,20 @@ import os
 from xueqiu import getData
 
 
-
 def writeXls(shOrSz, fromRow, results):
-    FILE_NAME='bonus.xls'
+    FILE_NAME = 'bonus.xls'
     oldwb = xlrd.open_workbook(FILE_NAME, 'rw')
     newwb = copy(oldwb)
     sheet = newwb.get_sheet(0)
-    if(shOrSz=='SZ'):
+    if (shOrSz == 'SZ'):
         sheet = newwb.get_sheet(1)
     row = fromRow
     for i in range(0, len(results)):
         result = results[i]
         href = result[0]
-        jsonStr=result[1]
-        data=json.loads(jsonStr)
-        if (('list' in data)& (data['list'] is not None)):
+        jsonStr = result[1]
+        data = json.loads(jsonStr)
+        if (('list' in data) & (data['list'] is not None)):
             listJson = data['list']
             for item in listJson:
                 sheet.write(row, 1, href)
@@ -68,18 +67,19 @@ def writeXls(shOrSz, fromRow, results):
                     sheet.write(row, 20, item['divibegdate'])
                 if ('summarize' in item):
                     sheet.write(row, 21, item['summarize'])
-                row=row+1
+                row = row + 1
     os.remove(FILE_NAME)
     newwb.save(FILE_NAME)
     print(row)
     return row
 
-if __name__=="__main__":
-    #SH 0-287-1779
-    #SZ 0-951
-    #fromRow=1
-    shOrSz='SZ'
-    rangeStart=800
-    rangeEnd=951
-    fromRow=7737
-    writeXls(shOrSz,fromRow,getData(shOrSz,rangeStart,rangeEnd,'/stock/f10/bonus.json'))
+
+if __name__ == "__main__":
+    # SH 0-287-1779
+    # SZ 0-951
+    # fromRow=1
+    shOrSz = 'SZ'
+    rangeStart = 800
+    rangeEnd = 951
+    fromRow = 7737
+    writeXls(shOrSz, fromRow, getData(shOrSz, rangeStart, rangeEnd, '/stock/f10/bonus.json'))

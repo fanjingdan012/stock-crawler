@@ -7,7 +7,7 @@ import readStockList
 #import MySQLdb
 import xlrd
 import xlwt
-from xlutils.copy import copy
+# from xlutils.copy import copy
 import os
 import json
 import sys
@@ -20,14 +20,21 @@ def getHeaders ():
            #'Host': 'xueqiu.com',
            #'Connection':'keep-alive',
            #'Accept':'*/*',
-           'cookie':'device_id=bfb52968438e18b2ff72f911fc12a605; s=eb17c099s1; aliyungf_tc=AQAAAHb7ilL4EgEACbB+3naX4bau6aED; __utmc=1; __utmz=1.1520233626.11.5.utmcsr=fanjingdan012.github.io|utmccn=(referral)|utmcmd=referral|utmcct=/stock-crawler/index.html; Hm_lvt_1db88642e346389874251b5a1eded6e3=1520233626,1520233656,1520233731,1520233773; xq_a_token=19f5e0044f535b6b1446bb8ae1da980a48bbe850; xq_a_token.sig=aaTVFAX9sVcWtOiu-5L8dL-p40k; xq_r_token=6d30415b5f855c12fd74c6e2fb7662ea40272056; xq_r_token.sig=rEvIjgpbifr6Q_Cxwx7bjvarJG0; u=361520406370054; __utma=1.455231070.1516958117.1520233626.1520406371.12; __utmt=1; __utmb=1.2.10.1520406371; Hm_lpvt_1db88642e346389874251b5a1eded6e3=1520406375'
+           'cookie':'device_id=2190831616ca50845068b5e57ac16812; s=fh1146h1wd; _ga=GA1.2.1023145669.1516348405; __utma=1.1023145669.1516348405.1532916882.1533125297.21; __utmz=1.1533125297.21.7.utmcsr=fanjingdan012.github.io|utmccn=(referral)|utmcmd=referral|utmcct=/stock-overview/; aliyungf_tc=AQAAAIRiLxZ0LQ8AeelB3k+XRROIWJ/i; __lnkrntdmcvrd=-1; xq_a_token=aef774c17d4993658170397fcd0faedde488bd20; xq_a_token.sig=F7BSXzJfXY0HFj9lqXif9IuyZhw; xq_r_token=d694856665e58d9a55450ab404f5a0144c4c978e; xq_r_token.sig=Ozg4Sbvgl2PbngzIgexouOmvqt0; u=901533354344088; Hm_lvt_1db88642e346389874251b5a1eded6e3=1532916883,1532916905,1533125297,1533354344; Hm_lpvt_1db88642e346389874251b5a1eded6e3=1533354344; _gid=GA1.2.450008542.1533354344; _gat_gtag_UA_16079156_4=1'
     }
+
+
+def get_response(url):
+    headers = getHeaders()
+    req = urllib.request.Request(url, headers=headers)
+    content = urllib.request.urlopen(req).read().decode('utf-8')
+    return content
 
 
 def get_data(stock_list, urlPattern, fileName):
     f = open(fileName+".txt", "a",encoding='utf-8')
     XUEQIU_DOMAIN = 'https://xueqiu.com'
-    headers = getHeaders()
+
     # stock_list = readStockList.read_stock_list(sh_sz, range_start, range_end)
     print(stock_list)
     results = []
@@ -40,8 +47,7 @@ def get_data(stock_list, urlPattern, fileName):
         f.write('\n')
         result.append(row['name'])
         result.append(url)
-        req = urllib.request.Request(url, headers=headers)
-        content = urllib.request.urlopen(req).read().decode('utf-8')
+        content = get_response(url)
         print(content)
         f.write(content)
         f.write('\n')
