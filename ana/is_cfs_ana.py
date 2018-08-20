@@ -4,46 +4,46 @@ import pandas as pd
 from mpl_toolkits.mplot3d import axes3d
 
 
-def config_is_cfs_subplot(ax,df_cfs,df_is):
+def config_is_cfs_subplot(ax,df):
     width = 0.12
     # cfs var
-    t = df_cfs['enddate']
-    opcashinfl = df_cfs['bizcashinfl']
-    opcashoutf = df_cfs['bizcashoutf']
-    mananetr = df_cfs['mananetr']
+    t = df['enddate']
+    opcashinfl = df['bizcashinfl']
+    opcashoutf = df['bizcashoutf']
+    mananetr = df['mananetr']
 
-    invcashinfl = df_cfs['invcashinfl']
-    invcashoutf = df_cfs['invcashoutf']
-    invnetcashflow = df_cfs['invnetcashflow']
+    invcashinfl = df['invcashinfl']
+    invcashoutf = df['invcashoutf']
+    invnetcashflow = df['invnetcashflow']
 
-    fincashinfl = df_cfs['fincashinfl']
-    fincashoutf = df_cfs['fincashoutf']
-    finnetcflow = df_cfs['finnetcflow']
+    fincashinfl = df['fincashinfl']
+    fincashoutf = df['fincashoutf']
+    finnetcflow = df['finnetcflow']
 
 
 
 
     # is var
-    t = df_is['enddate']
-    bti = df_is['biztotinco']
-    bi = df_is['bizinco']
-    inteinco = df_is['inteinco']
-    pouninco = df_is['pouninco']
-    otherbizinco = df_is['otherbizinco']
-    btc = df_is['biztotcost']
-    bc = df_is['bizcost']
-    pp = df_is['perprofit']
-    biztax = df_is['biztax']
-    salesexpe = df_is['salesexpe']
-    manaexpe = df_is['manaexpe']
-    finexpe = df_is['finexpe']
-    asseimpaloss = df_is['asseimpaloss']
-    inveinco = df_is['inveinco']
-    nonoreve = df_is['nonoreve']
-    nonoexpe = df_is['nonoexpe']
-    noncassetsdisl = df_is['noncassetsdisl']
-    incotaxexpe = df_is['incotaxexpe']
-    netprofit = df_is['netprofit']
+    t = df['enddate']
+    bti = df['biztotinco']
+    bi = df['bizinco']
+    inteinco = df['inteinco']
+    pouninco = df['pouninco']
+    otherbizinco = df['otherbizinco']
+    btc = df['biztotcost']
+    bc = df['bizcost']
+    pp = df['perprofit']
+    biztax = df['biztax']
+    salesexpe = df['salesexpe']
+    manaexpe = df['manaexpe']
+    finexpe = df['finexpe_is']
+    asseimpaloss = df['asseimpaloss']
+    inveinco = df['inveinco']
+    nonoreve = df['nonoreve']
+    nonoexpe = df['nonoexpe']
+    noncassetsdisl = df['noncassetsdisl']
+    incotaxexpe = df['incotaxexpe']
+    netprofit = df['netprofit_is']
 
     ind = np.arange(len(t))  # the x locations for the groups
 
@@ -52,7 +52,7 @@ def config_is_cfs_subplot(ax,df_cfs,df_is):
 
     # bar 2 inco
     bar2_position=ind
-    bizincob = ax.bar(bar2_position, bi, width*6, bottom=inveinco + pouninco + inteinco + otherbizinco,color='salmon')
+    bizincob = ax.bar(bar2_position, bi, width*6, bottom=inveinco + pouninco + inteinco + otherbizinco,color='pink')
     otherbizincob = ax.bar(bar2_position, otherbizinco, width*6, bottom=inveinco + pouninco + inteinco,color='lightcoral')
     inteincob = ax.bar(bar2_position, inteinco, width*6, bottom=inveinco + pouninco,color='yellow')
     pounincob = ax.bar(bar2_position, pouninco, width*6, bottom=inveinco,color='khaki')
@@ -64,7 +64,7 @@ def config_is_cfs_subplot(ax,df_cfs,df_is):
 
     # bar 4 co
     bar4_position=ind -2 * width
-    bcb = ax.bar(bar4_position, bc, width, bottom=pp + asseimpaloss + finexpe + manaexpe + salesexpe + biztax,color='blue')
+    bcb = ax.bar(bar4_position, bc, width, bottom=pp + asseimpaloss + finexpe + manaexpe + salesexpe + biztax,color='lightskyblue')
     biztaxb = ax.bar(bar4_position, biztax, width, bottom=pp + asseimpaloss + finexpe + manaexpe + salesexpe,color='navy')
     salesexpeb = ax.bar(bar4_position, salesexpe, width, bottom=pp + asseimpaloss + finexpe + manaexpe,color='royalblue')
     manaexpeb = ax.bar(bar4_position, manaexpe, width, bottom=pp + asseimpaloss + finexpe,color='mediumblue')
@@ -105,11 +105,18 @@ def config_is_cfs_subplot(ax,df_cfs,df_is):
 
 if __name__ == "__main__":
     plt.style.use('ggplot')
-    df_cfs = pd.read_excel('../data/cfs_SZ000333.xlsx')#, skiprows=1
-    df_is = pd.read_excel('../data/is_SZ000333.xlsx')
+    df_cfs = pd.read_excel('../data/cfs_SH600839.xlsx')#, skiprows=1
+    df_is = pd.read_excel('../data/is_SH600839.xlsx')
     df_cfs.fillna(0, inplace=True)
-    df_is.fillna(0,inplace=True)
+    df_is.fillna(0, inplace=True)
+    # print(df_cfs.keys())
+
+    df_is_cfs = pd.merge(df_cfs, df_is, on='enddate',copy=True, indicator='both',suffixes=('_cfs','_is'))
+    # df_is_cfs.to_excel('../data/is_cfs_SH600839.xlsx')
+    # df_is_cfs.fillna(0, inplace=True)
+    # print(df_is_cfs.keys())
+    # df_is_cfs=[df_is_cfs['enddate']>'20080331']
     fig, ax = plt.subplots(figsize=(20, 8))
-    config_is_cfs_subplot(ax,df_cfs,df_is)
+    config_is_cfs_subplot(ax,df_is_cfs)
     plt.show()
 

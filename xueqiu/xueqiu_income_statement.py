@@ -74,4 +74,4 @@ def get_is_for_range_stocks():
     xueqiu.write_f10_xls(fromRow,data,'../data/is_家电')
 
 if __name__=="__main__":
-    get_is_for_1_stock('SZ000333')
+    get_is_for_1_stock('SH600839')

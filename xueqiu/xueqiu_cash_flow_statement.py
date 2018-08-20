@@ -1,6 +1,6 @@
 #-*-coding:utf-8 -*-
 from xueqiu import get_data
-from xueqiu import write_f10_xls
+# from xueqiu import write_f10_xls
 import readStockList
 import urllib.request
 import json
@@ -48,6 +48,6 @@ def get_cfs_for_range_stocks():
 
 
 if __name__ == "__main__":
-    get_cfs_for_1_stock('SZ000333')
+    get_cfs_for_1_stock('SH600839')
 
 
