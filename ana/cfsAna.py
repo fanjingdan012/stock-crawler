@@ -1,20 +1,10 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
+from mpl_toolkits.mplot3d import axes3d
 
 
-
-
-if __name__ == "__main__":
-    dfo = pd.read_excel('../data/cfs1.xls', skiprows=1)
-
-    plt.style.use('ggplot')
-
-    from mpl_toolkits.mplot3d import axes3d
-
-    df = dfo[dfo['code'] == 'SZ000333']
-    df.fillna(0, inplace=True)
-    fig, ax = plt.subplots(figsize=(120, 8))
+def config_cfs_subplot(ax):
     width = 0.1
     t = df['enddate']
     bizcashinfl = df['bizcashinfl']
@@ -43,5 +33,14 @@ if __name__ == "__main__":
     finnetcflowb = ax.bar(ind + 5 * width, finnetcflow, width)
     ax.set_xticks(ind + width / 6)
     ax.set_xticklabels(t)
+
+
+if __name__ == "__main__":
+    dfo = pd.read_excel('../data/cfs1.xls', skiprows=1)
+    plt.style.use('ggplot')
+    df = dfo[dfo['code'] == 'SZ000333']
+    df.fillna(0, inplace=True)
+    fig, ax = plt.subplots(figsize=(120, 8))
+    config_cfs_subplot(ax)
     plt.show()
 

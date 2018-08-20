@@ -1,4 +1,4 @@
-#-*-coding:utf-8 -*-
+# -*- coding: utf-8 -*-
 import urllib.request
 import json
 import readStockList
@@ -13,39 +13,6 @@ from xueqiu import getFieldColDict
 from xueqiu import write_f10_xls
 import pandas as pd
 import datetime
-
-
-def writeXls(shOrSz, fromRow, results):
-    FILE_NAME='bs.xls'
-    oldwb = xlrd.open_workbook(FILE_NAME, 'r')
-    fieldColDict = getFieldColDict(oldwb)
-    newwb = copy(oldwb)
-    sheet = newwb.get_sheet(0)
-    if(shOrSz=='SZ'):
-        sheet = newwb.get_sheet(1)
-    row = fromRow
-    for i in range(0, len(results)):
-        result = results[i]
-        href = result[0]
-        jsonStr=result[1]
-        data=json.loads(jsonStr)
-        if (('list' in data)& (data['list'] is not None)):
-            listJson = data['list']
-            for item in listJson:
-                sheet.write(row, 1, href)
-                for key, value in item.items():
-                    col=fieldColDict.get(key,-1)
-                    if(col==-1):
-                        col=max(fieldColDict.values())+1
-                        sheet.write(0,col,key)
-                        fieldColDict[key]=col
-                        print('newly added col:'+key)
-                    sheet.write(row, col, value)
-                row=row+1
-    os.remove(FILE_NAME)
-    newwb.save(FILE_NAME)
-    print(row)
-    return row
 
 
 def get_bs_for_1_stock(str_stock_code):

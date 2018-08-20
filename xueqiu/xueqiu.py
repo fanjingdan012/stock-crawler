@@ -13,25 +13,29 @@ import json
 import sys
 
 
-def getHeaders ():
+def get_headers ():
     return {#'X-Requested-With': 'XMLHttpRequest',
            #'Referer': 'http://xueqiu.com/p/ZH010389',
            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36',
            #'Host': 'xueqiu.com',
            #'Connection':'keep-alive',
            #'Accept':'*/*',
-           'cookie':'device_id=2190831616ca50845068b5e57ac16812; s=fh1146h1wd; _ga=GA1.2.1023145669.1516348405; __utma=1.1023145669.1516348405.1532916882.1533125297.21; __utmz=1.1533125297.21.7.utmcsr=fanjingdan012.github.io|utmccn=(referral)|utmcmd=referral|utmcct=/stock-overview/; aliyungf_tc=AQAAAIRiLxZ0LQ8AeelB3k+XRROIWJ/i; __lnkrntdmcvrd=-1; xq_a_token=aef774c17d4993658170397fcd0faedde488bd20; xq_a_token.sig=F7BSXzJfXY0HFj9lqXif9IuyZhw; xq_r_token=d694856665e58d9a55450ab404f5a0144c4c978e; xq_r_token.sig=Ozg4Sbvgl2PbngzIgexouOmvqt0; u=901533354344088; Hm_lvt_1db88642e346389874251b5a1eded6e3=1532916883,1532916905,1533125297,1533354344; Hm_lpvt_1db88642e346389874251b5a1eded6e3=1533354344; _gid=GA1.2.450008542.1533354344; _gat_gtag_UA_16079156_4=1'
+           'cookie':
+        'device_id=2190831616ca50845068b5e57ac16812; s=fh1146h1wd; _ga=GA1.2.1023145669.1516348405; __utmz=1.1533125297.21.7.utmcsr=fanjingdan012.github.io|utmccn=(referral)|utmcmd=referral|utmcct=/stock-overview/; xq_a_token=584d0cf8d5a5a9809761f2244d8d272bac729ed4; xq_a_token.sig=x0gT9jm6qnwd-ddLu66T3A8KiVA; xq_r_token=98f278457fc4e1e5eb0846e36a7296e642b8138a; xq_r_token.sig=2Uxv_DgYTcCjz7qx4j570JpNHIs; _gid=GA1.2.215616112.1534734083; u=961534734084008; Hm_lvt_1db88642e346389874251b5a1eded6e3=1532916905,1533125297,1533354344,1534734084; Hm_lpvt_1db88642e346389874251b5a1eded6e3=1534734101; __utma=1.1023145669.1516348405.1533125297.1534734104.22; __utmc=1; __utmt=1; __utmb=1.1.10.1534734104'
     }
 
 
 def get_response(url):
-    headers = getHeaders()
+    headers = get_headers()
     req = urllib.request.Request(url, headers=headers)
     content = urllib.request.urlopen(req).read().decode('utf-8')
     return content
 
 
 def get_data(stock_list, urlPattern, fileName):
+    """
+    deprecated
+    """
     f = open(fileName+".txt", "a",encoding='utf-8')
     XUEQIU_DOMAIN = 'https://xueqiu.com'
 
@@ -57,53 +61,7 @@ def get_data(stock_list, urlPattern, fileName):
     return results
 
 
-def getFieldColDict( workbook):
-    field_col_dict = dict()
-    old_sheet = workbook.sheet_by_index(0)
-    for col in range(old_sheet.ncols):
-        field_col_dict[old_sheet.cell_value(0, col)] = col
-    return field_col_dict
 
-
-def write_f10_xls(fromRow, results,fileName):
-    fileName1 = fileName+".xls"
-    oldwb = xlrd.open_workbook(fileName1, 'r')
-    fieldColDict = getFieldColDict(oldwb)
-    newwb = copy(oldwb)
-    sheet = newwb.get_sheet(0)
-    sheet.write(0, 0, 'code')
-    sheet.write(0, 1, 'name')
-    sheet.write(0, 2, 'url')
-    row = fromRow
-    for i in range(0, len(results)):
-        result = results[i]
-        stock=result[0]
-        name = result[1]
-        href = result[2]
-        jsonStr=result[3]
-        data=json.loads(jsonStr)
-        if (('list' in data)& (data['list'] is not None)):
-            listJson = data['list']
-            for item in listJson:
-                sheet.write(row, 0, stock)
-                sheet.write(row, 1, name)
-                sheet.write(row, 2, href)
-                for key, value in item.items():
-                    col=fieldColDict.get(key,-1)
-                    if(col==-1):
-                        if(fieldColDict):
-                            col=max(fieldColDict.values())+1
-                        else:
-                            col=3
-                        sheet.write(0,col,key)
-                        fieldColDict[key]=col
-                        print('newly added col:'+key)
-                    sheet.write(row, col, value)
-                row=row+1
-    os.remove(fileName1)
-    newwb.save(fileName1)
-    print(row)
-    return row
 
 def write_price_xls(  results,file_dir):
 

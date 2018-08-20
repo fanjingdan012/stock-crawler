@@ -1,16 +1,42 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
+from mpl_toolkits.mplot3d import axes3d
+
+# def config_is_subplot1(ax):
+
+
+
+
+def config_is_subplot(ax2):
+    # inco o
+    bizincob2 = ax2.bar(ind , bi, width*6, bottom=otherbizinco, color='silver')
+    otherbizincob2 = ax2.bar(ind , otherbizinco, width*6,color='g' )
+    # co o
+    bcb2 = ax2.bar(ind + width, -bc, width,bottom=otherbizinco+bi)
+    biztaxb2 = ax2.bar(ind + width, -biztax, width,bottom=otherbizinco+bi-bc)
+    salesexpeb2 = ax2.bar(ind + width, -salesexpe, width,bottom=otherbizinco+bi-bc-biztax)
+    manaexpeb2 = ax2.bar(ind + width, -manaexpe, width,bottom=otherbizinco+bi-bc-biztax-salesexpe)
+
+    # inco f
+    inteincob2 = ax2.bar(ind + 2*width, inteinco, width,bottom=noncassetsdisl+nonoreve+inveinco+pouninco)
+    pounincob2 = ax2.bar(ind + 2*width, pouninco, width,bottom=noncassetsdisl+nonoreve+inveinco)
+    inveincob2 = ax2.bar(ind + 2*width, inveinco, width,bottom=noncassetsdisl+nonoreve)
+    nonoreveb2 = ax2.bar(ind + 2*width, nonoreve, width,bottom=noncassetsdisl)
+    noncassetsdislb2 = ax2.bar(ind + 2*width, noncassetsdisl, width)
+    # co f
+    finexpeb2 = ax2.bar(ind + 3*width, finexpe, width,bottom=incotaxexpe+nonoexpe+asseimpaloss)
+    asseimpalossb2 = ax2.bar(ind + 3*width, asseimpaloss, width,bottom=incotaxexpe+nonoexpe)
+    nonoexpeb2 = ax2.bar(ind + 3*width, nonoexpe, width,bottom=incotaxexpe)
+    incotaxexpeb2 = ax2.bar(ind + 3*width, incotaxexpe, width)
+    # netprofitb    = ax.bar(ind + 5*width, netprofit, width)
+    # ppb2 = ax2.bar(ind +width, pp, width, color='y')
 
 if __name__ == "__main__":
-    dfo=pd.read_excel('../data/is1.xls',skiprows=1)
-
     plt.style.use('ggplot')
 
-
-    from mpl_toolkits.mplot3d import axes3d
-
-    df = dfo[dfo['code']=='SH600983']
+    dfo = pd.read_excel('../data/is_SZ000333.xlsx')
+    df = dfo#[dfo['code']=='SH600983']
     df.fillna(0,inplace=True)
     # fig, ax = plt.subplots(figsize=(120,8))
     fig = plt.figure()
@@ -36,10 +62,6 @@ if __name__ == "__main__":
     noncassetsdisl= df['noncassetsdisl']
     incotaxexpe= df['incotaxexpe']
     netprofit= df['netprofit']
-
-
-
-
 
 
 
@@ -76,33 +98,8 @@ if __name__ == "__main__":
 
     # ax2 managing is
     ax2 = fig.add_subplot(212)
-    # inco o
-    bizincob2 = ax2.bar(ind , bi, width, bottom=otherbizinco)
-    otherbizincob2 = ax2.bar(ind , otherbizinco, width )
-    # co o
-    bcb2 = ax2.bar(ind + width, -bc, width,bottom=otherbizinco+bi)
-    biztaxb2 = ax2.bar(ind + width, -biztax, width,bottom=otherbizinco+bi-bc)
-    salesexpeb2 = ax2.bar(ind + width, -salesexpe, width,bottom=otherbizinco+bi-bc-biztax)
-    manaexpeb2 = ax2.bar(ind + width, -manaexpe, width,bottom=otherbizinco+bi-bc-biztax-salesexpe)
 
-    # inco f
-    inteincob2 = ax2.bar(ind + 2*width, inteinco, width,bottom=noncassetsdisl+nonoreve+inveinco+pouninco)
-    pounincob2 = ax2.bar(ind + 2*width, pouninco, width,bottom=noncassetsdisl+nonoreve+inveinco)
-    inveincob2 = ax2.bar(ind + 2*width, inveinco, width,bottom=noncassetsdisl+nonoreve)
-    nonoreveb2 = ax2.bar(ind + 2*width, nonoreve, width,bottom=noncassetsdisl)
-    noncassetsdislb2 = ax2.bar(ind + 2*width, noncassetsdisl, width)
-    # co f
-    finexpeb2 = ax2.bar(ind + 3*width, finexpe, width,bottom=incotaxexpe+nonoexpe+asseimpaloss)
-    asseimpalossb2 = ax2.bar(ind + 3*width, asseimpaloss, width,bottom=incotaxexpe+nonoexpe)
-    nonoexpeb2 = ax2.bar(ind + 3*width, nonoexpe, width,bottom=incotaxexpe)
-    incotaxexpeb2 = ax2.bar(ind + 3*width, incotaxexpe, width)
-
-    # netprofitb    = ax.bar(ind + 5*width, netprofit, width)
-
-
-    # ppb2 = ax2.bar(ind +width, pp, width, color='y')
-
-
+    config_is_subplot(ax2)
 
 
     ax.set_xticks(ind + width / 2)

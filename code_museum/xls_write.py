@@ -1,35 +1,21 @@
-#-*-coding:utf-8 -*-
 import urllib.request
 import json
 import readStockList
-# import MySQLdb
 import xlrd
 import xlwt
 from xlutils.copy import copy
 import os
-from xueqiu import getHeaders
 from xueqiu import get_data
+from xueqiu import get_response
+from xueqiu import getFieldColDict
 from xueqiu import write_f10_xls
+import pandas as pd
+import datetime
 
-def getIncomeStatements(shOrSz,rangeStart,rangeEnd):
-    headers = getHeaders()
-    stockList = readStockList.readStockList(shOrSz,rangeStart,rangeEnd)
-    print(stockList)
-    incomeStatements = []
-    for stock in stockList:
-        incomeStatement=[]
-        url = 'https://xueqiu.com/stock/f10/incstatement.json?symbol=' + stock
-        print(url)
-        incomeStatement.append(url)
-        req = urllib.request.Request(url, headers=headers)
-        content = urllib.request.urlopen(req).read().decode('utf-8')
-        print(content)
-        data = json.loads(content)
-        incomeStatement.append(json.dumps(data))
-        incomeStatements.append(incomeStatement)
-    return incomeStatements
-
-
+"""
+all code are not used anymore in this package
+"""
+# in xueqiu_income_statement.py
 def writeXlsIncomeStatements(shOrSz,fromRow,incomeStatements):
     FILE_NAME='is.xls'
     oldwb = xlrd.open_workbook(FILE_NAME, 'rw')
@@ -220,22 +206,85 @@ def writeXlsIncomeStatements(shOrSz,fromRow,incomeStatements):
     print(row)
     return row
 
-# if __name__=="__main__":
-#     #SH 287-17
-#     #SZ 0-951
-#     shOrSz='SZ'
-#     rangeStart=951
-#     rangeEnd=952
-#     fromRow=18276
-#     writeXlsIncomeStatements(shOrSz,fromRow,getIncomeStatements(shOrSz,rangeStart,rangeEnd))
-if __name__=="__main__":
-    #SH 0-287-1779
-    #SZ 0-951
-    #fromRow=1
-    sh_sz='SZ'
-    range_start=2871
-    range_end=2908
-    fromRow=1
-    stock_list = readStockList.read_industry_stock_list(range_start, range_end)
-    data = get_data(stock_list, '/stock/f10/incstatement.json?size=10000&page=1','../data/is_家电')
-    write_f10_xls(fromRow,data,'../data/is_家电')
+
+# in xueqiu_balance_sheet.py
+def writeXls(shOrSz, fromRow, results):
+    FILE_NAME='bs.xls'
+    oldwb = xlrd.open_workbook(FILE_NAME, 'r')
+    fieldColDict = getFieldColDict(oldwb)
+    newwb = copy(oldwb)
+    sheet = newwb.get_sheet(0)
+    if(shOrSz=='SZ'):
+        sheet = newwb.get_sheet(1)
+    row = fromRow
+    for i in range(0, len(results)):
+        result = results[i]
+        href = result[0]
+        jsonStr=result[1]
+        data=json.loads(jsonStr)
+        if (('list' in data)& (data['list'] is not None)):
+            listJson = data['list']
+            for item in listJson:
+                sheet.write(row, 1, href)
+                for key, value in item.items():
+                    col=fieldColDict.get(key,-1)
+                    if(col==-1):
+                        col=max(fieldColDict.values())+1
+                        sheet.write(0,col,key)
+                        fieldColDict[key]=col
+                        print('newly added col:'+key)
+                    sheet.write(row, col, value)
+                row=row+1
+    os.remove(FILE_NAME)
+    newwb.save(FILE_NAME)
+    print(row)
+    return row
+
+# in xueqiu.py
+def getFieldColDict( workbook):
+    field_col_dict = dict()
+    old_sheet = workbook.sheet_by_index(0)
+    for col in range(old_sheet.ncols):
+        field_col_dict[old_sheet.cell_value(0, col)] = col
+    return field_col_dict
+
+
+def write_f10_xls(fromRow, results,fileName):
+    fileName1 = fileName+".xls"
+    oldwb = xlrd.open_workbook(fileName1, 'r')
+    fieldColDict = getFieldColDict(oldwb)
+    newwb = copy(oldwb)
+    sheet = newwb.get_sheet(0)
+    sheet.write(0, 0, 'code')
+    sheet.write(0, 1, 'name')
+    sheet.write(0, 2, 'url')
+    row = fromRow
+    for i in range(0, len(results)):
+        result = results[i]
+        stock=result[0]
+        name = result[1]
+        href = result[2]
+        jsonStr=result[3]
+        data=json.loads(jsonStr)
+        if ('list' in data)& (data['list'] is not None):
+            listJson = data['list']
+            for item in listJson:
+                sheet.write(row, 0, stock)
+                sheet.write(row, 1, name)
+                sheet.write(row, 2, href)
+                for key, value in item.items():
+                    col=fieldColDict.get(key,-1)
+                    if(col==-1):
+                        if(fieldColDict):
+                            col=max(fieldColDict.values())+1
+                        else:
+                            col=3
+                        sheet.write(0,col,key)
+                        fieldColDict[key]=col
+                        print('newly added col:'+key)
+                    sheet.write(row, col, value)
+                row=row+1
+    os.remove(fileName1)
+    newwb.save(fileName1)
+    print(row)
+    return row
