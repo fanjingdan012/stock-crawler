@@ -52,42 +52,52 @@ def config_is_cfs_subplot(ax,df):
 
     # bar 2 inco
     bar2_position=ind
+
     bizincob = ax.bar(bar2_position, bi, width*6, bottom=inveinco + pouninco + inteinco + otherbizinco,color='pink')
     otherbizincob = ax.bar(bar2_position, otherbizinco, width*6, bottom=inveinco + pouninco + inteinco,color='lightcoral')
     inteincob = ax.bar(bar2_position, inteinco, width*6, bottom=inveinco + pouninco,color='yellow')
     pounincob = ax.bar(bar2_position, pouninco, width*6, bottom=inveinco,color='khaki')
     inveincob = ax.bar(bar2_position, inveinco, width*6,color='gold')
 
+
     # bar 3 co
     # bar3_position=ind - 3 * width
     # rects3 = ax.bar(bar3_position, btc, width, bottom=pp,color='blue')
 
     # bar 4 co
-    bar4_position=ind -2 * width
-    bcb = ax.bar(bar4_position, bc, width, bottom=pp + asseimpaloss + finexpe + manaexpe + salesexpe + biztax,color='lightskyblue')
-    biztaxb = ax.bar(bar4_position, biztax, width, bottom=pp + asseimpaloss + finexpe + manaexpe + salesexpe,color='navy')
-    salesexpeb = ax.bar(bar4_position, salesexpe, width, bottom=pp + asseimpaloss + finexpe + manaexpe,color='royalblue')
-    manaexpeb = ax.bar(bar4_position, manaexpe, width, bottom=pp + asseimpaloss + finexpe,color='mediumblue')
-    finexpeb = ax.bar(bar4_position, finexpe, width, bottom=pp + asseimpaloss,color='green')
-    asseimpalossb = ax.bar(bar4_position, asseimpaloss, width, bottom=pp,color='cornflowerblue')
-    ppb = ax.bar(bar4_position, pp, width,color='purple')
 
-    # bar 5 inco
-    nonoreveb = ax.bar(ind -1 * width, nonoreve, width, bottom=pp,color='black')
+    bar4_position=ind -1.5 * width
+
+    bcb = ax.bar(bar4_position, bc, width*2, bottom=pp + asseimpaloss + finexpe + manaexpe + salesexpe + biztax,color='skyblue')
+    biztaxb = ax.bar(bar4_position, biztax, width*2, bottom=pp + asseimpaloss + finexpe + manaexpe + salesexpe,color='navy')
+    salesexpeb = ax.bar(bar4_position, salesexpe, width*2, bottom=pp + asseimpaloss + finexpe + manaexpe,color='dodgerblue')
+    manaexpeb = ax.bar(bar4_position, manaexpe, width*2, bottom=pp + asseimpaloss + finexpe,color='lightskyblue')
+    finexpeb = ax.bar(bar4_position, finexpe, width*2, bottom=pp + asseimpaloss,color='palegreen')
+    asseimpalossb = ax.bar(bar4_position, asseimpaloss, width*2, bottom=pp,color='cornflowerblue')
+    ppb = ax.bar(bar4_position, pp, width*2,color='purple')
+
+
 
     # bar 6 co
-    bar5_position = ind
-    nonoexpeb = ax.bar(bar5_position, nonoexpe, width, bottom=netprofit + incotaxexpe + noncassetsdisl,color='darkslateblue')
+    bar5_position = bar4_position
+
+    # nonoreveb = ax.bar(bar2_position, nonoreve, width * 6, bottom=inveinco + pouninco + inteinco + otherbizinco,
+    #                    color='black')
+    #
+    # nonoexpeb = ax.bar(bar5_position, nonoexpe, width, bottom=netprofit + incotaxexpe + noncassetsdisl,color='darkslateblue')
+    nonopb=ax.bar(bar5_position, nonoreve-nonoexpe, width, bottom=netprofit + incotaxexpe + noncassetsdisl,color='darkslateblue')
+
     noncassetsdislb = ax.bar(bar5_position, noncassetsdisl, width, bottom=netprofit + incotaxexpe,color='darkblue')
     incotaxexpeb = ax.bar(bar5_position, incotaxexpe, width, bottom=netprofit,color='black')
     netprofitb = ax.bar(bar5_position, netprofit, width,color='m')
 
     # cfs bars
     # bar 7 cfs op cash in
-    opcashinflb = ax.bar(ind + 1 * width, opcashinfl, width, color='red')
+    bar6_position=ind+1.5*width
+    opcashinflb = ax.bar(bar6_position, opcashinfl, width*2, color='salmon')
     #bar 8 cfs op cash out + op cash net
-    opcashoutfb = ax.bar(ind + 2 * width, opcashoutf, width, bottom=mananetr, color='blue')
-    mananetrb = ax.bar(ind + 2 * width, mananetr, width, color='purple')
+    opcashoutfb = ax.bar(bar6_position, opcashoutf, width, bottom=mananetr, color='skyblue')
+    mananetrb = ax.bar(bar6_position, mananetr, width, color='darkviolet')
 
     # invcashinflb = ax.bar(ind + 2 * width, invcashinfl, width)
     # invcashoutfb = ax.bar(ind + 3 * width, invcashoutf, width, bottom=invnetcashflow)
