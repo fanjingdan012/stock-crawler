@@ -208,6 +208,15 @@ def writeXlsIncomeStatements(shOrSz,fromRow,incomeStatements):
 
 
 # in xueqiu_balance_sheet.py
+import xlrd
+import xlwt
+
+import os
+from xueqiu import get_data
+# from xueqiu import getFieldColDict
+# from xueqiu import write_f10_xls
+# from xlutils.copy import copy
+# import MySQLdb
 def writeXls(shOrSz, fromRow, results):
     FILE_NAME='bs.xls'
     oldwb = xlrd.open_workbook(FILE_NAME, 'r')
@@ -239,6 +248,69 @@ def writeXls(shOrSz, fromRow, results):
     newwb.save(FILE_NAME)
     print(row)
     return row
+
+
+def get_bs_for_range_stocks():
+    # SH 0-287-1779
+    # SZ 0-951
+    # fromRow=1
+    sh_sz = 'SZ'
+    range_start = 2871
+    range_end = 2908
+    fromRow = 1
+    stock_list = readStockList.read_industry_stock_list2('化工行业')
+    data = get_data(stock_list, '/stock/f10/balsheet.json?size=10000&page=1', '../data/bs_化工行业')
+    write_f10_xls(fromRow, data, '../data/bs_化工行业')
+
+# in xueqiu_cash_flow_statement.py
+# import MySQLdb
+import xlrd
+import xlwt
+# from xlutils.copy import copy
+# from xueqiu import get_data
+# from xueqiu import get_response
+# from xueqiu import getFieldColDict
+# from xueqiu import write_f10_xls
+def get_cfs_for_range_stocks():
+    #SH 0-287-1779
+    #SZ 0-951
+    range_start=2871
+    range_end=2908
+    fromRow=1
+    stock_list = readStockList.read_industry_stock_list2('家电行业')
+    data = get_data( stock_list, '/stock/f10/cfstatement.json?size=10000&page=1', '../data/cfs_家电')
+    write_f10_xls(fromRow, data, '../data/cfs_家电')
+
+
+# in xueqiu_income_statement.py
+# import MySQLdb
+import xlrd
+import xlwt
+# from xueqiu import getHeaders
+# from xueqiu import get_data
+# from xueqiu import write_f10_xls
+# if __name__=="__main__":
+#     #SH 287-17
+#     #SZ 0-951
+#     shOrSz='SZ'
+#     rangeStart=951
+#     rangeEnd=952
+#     fromRow=18276
+#     writeXlsIncomeStatements(shOrSz,fromRow,getIncomeStatements(shOrSz,rangeStart,rangeEnd))
+
+
+
+def get_is_for_range_stocks():
+    #SH 0-287-1779
+    #SZ 0-951
+    #fromRow=1
+    sh_sz='SZ'
+    range_start=2871
+    range_end=2908
+    fromRow=1
+    stock_list = readStockList.read_industry_stock_list(range_start, range_end)
+    data = xueqiu.get_data(stock_list, '/stock/f10/incstatement.json?size=10000&page=1','../data/is_家电')
+    xueqiu.write_f10_xls(fromRow,data,'../data/is_家电')
 
 # in xueqiu.py
 def getFieldColDict( workbook):
@@ -288,3 +360,4 @@ def write_f10_xls(fromRow, results,fileName):
     newwb.save(fileName1)
     print(row)
     return row
+

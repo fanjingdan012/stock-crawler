@@ -7,7 +7,7 @@ from matplotlib import style
 if __name__ == '__main__':
 
     style.use('ggplot')
-    dfo=pd.read_excel('../data/bs_SZ000860.xlsx')
+    dfo=pd.read_excel('../data/bs_SH600795.xlsx')
 
     # fig, ax = plt.subplots(figsize=(15,8))
     fig = plt.figure()
