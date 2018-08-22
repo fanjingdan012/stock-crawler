@@ -6,9 +6,37 @@ from mpl_toolkits.mplot3d import axes3d
 # def config_is_subplot1(ax):
 
 
+def draw_is_income_bar(ax,position,width,bi,otherbizinco,inveinco,pouninco,inteinco):
+    bizincob = ax.bar(position, bi, width, bottom=inveinco + pouninco + inteinco + otherbizinco, color='pink')
+    otherbizincob = ax.bar(position, otherbizinco, width, bottom=inveinco + pouninco + inteinco,
+                           color='lightcoral')
+    inteincob = ax.bar(position, inteinco, width, bottom=inveinco + pouninco, color='yellow')
+    pounincob = ax.bar(position, pouninco, width, bottom=inveinco, color='khaki')
+    inveincob = ax.bar(position, inveinco, width, color='gold')
 
 
-def config_is_subplot(ax2):
+def draw_is_cost_bar(ax,position,width,bc,biztax,salesexpe,manaexpe,finexpe,asseimpaloss,pp):
+    bcb = ax.bar(position, bc, width, bottom=pp + asseimpaloss + finexpe + manaexpe + salesexpe + biztax,color='skyblue',label='biz cost')
+    biztaxb = ax.bar(position, biztax, width, bottom=pp + asseimpaloss + finexpe + manaexpe + salesexpe,color='navy',label='biz tax')
+    salesexpeb = ax.bar(position, salesexpe, width, bottom=pp + asseimpaloss + finexpe + manaexpe,color='dodgerblue',label='sales expense')
+    manaexpeb = ax.bar(position, manaexpe, width, bottom=pp + asseimpaloss + finexpe,color='lightskyblue',label='manage expense')
+    finexpeb = ax.bar(position, finexpe, width, bottom=pp + asseimpaloss,color='palegreen',label='finance expense')
+    asseimpalossb = ax.bar(position, asseimpaloss, width, bottom=pp,color='cornflowerblue',label='asset impa loss')
+    ppb = ax.bar(position, pp, width*2,color='purple',label='p profit')
+
+
+def draw_is_net_profit_bar(ax,position,width,nonoreve,nonoexpe,noncassetsdisl,incotaxexpe,netprofit):
+    # nonoreveb = ax.bar(bar2_position, nonoreve, width * 6, bottom=inveinco + pouninco + inteinco + otherbizinco,
+    #                    color='black')
+    #
+    # nonoexpeb = ax.bar(bar5_position, nonoexpe, width, bottom=netprofit + incotaxexpe + noncassetsdisl,color='darkslateblue')
+    nonopb=ax.bar(position, nonoreve-nonoexpe, width, bottom=netprofit + incotaxexpe + noncassetsdisl,color='darkslateblue',label='nonop')
+
+    noncassetsdislb = ax.bar(position, noncassetsdisl, width, bottom=netprofit + incotaxexpe,color='darkblue',label='nonc asset disl')
+    incotaxexpeb = ax.bar(position, incotaxexpe, width, bottom=netprofit,color='black',label='income tax')
+    netprofitb = ax.bar(position, netprofit, width,color='m',label='net profit')
+
+def draw_is_subplot(ax2):
     # inco o
     bizincob2 = ax2.bar(ind , bi, width*6, bottom=otherbizinco, color='silver')
     otherbizincob2 = ax2.bar(ind , otherbizinco, width*6,color='g' )
@@ -99,7 +127,7 @@ if __name__ == "__main__":
     # ax2 managing is
     ax2 = fig.add_subplot(212)
 
-    config_is_subplot(ax2)
+    draw_is_subplot(ax2)
 
 
     ax.set_xticks(ind + width / 2)

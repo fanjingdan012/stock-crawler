@@ -3,14 +3,16 @@ import numpy as np
 import pandas as pd
 from mpl_toolkits.mplot3d import axes3d
 import industry
+import is_chart
+import cfs_chart
 
 def config_is_cfs_subplot(ax,df):
     width = 0.12
     # cfs var
 
     stock_code = df['code']
-    opcashinfl = df['bizcashinfl']
-    opcashoutf = df['bizcashoutf']
+    bizcashinfl = df['bizcashinfl']
+    bizcashoutf = df['bizcashoutf']
     mananetr = df['mananetr']
 
     invcashinfl = df['invcashinfl']
@@ -53,13 +55,7 @@ def config_is_cfs_subplot(ax,df):
 
     # bar 2 inco
     bar2_position=ind
-
-    bizincob = ax.bar(bar2_position, bi, width*6, bottom=inveinco + pouninco + inteinco + otherbizinco,color='pink')
-    otherbizincob = ax.bar(bar2_position, otherbizinco, width*6, bottom=inveinco + pouninco + inteinco,color='lightcoral')
-    inteincob = ax.bar(bar2_position, inteinco, width*6, bottom=inveinco + pouninco,color='yellow')
-    pounincob = ax.bar(bar2_position, pouninco, width*6, bottom=inveinco,color='khaki')
-    inveincob = ax.bar(bar2_position, inveinco, width*6,color='gold')
-
+    is_chart.draw_is_income_bar(ax,bar2_position,width*6,bi,otherbizinco,inveinco,pouninco,inteinco)
 
     # bar 3 co
     # bar3_position=ind - 3 * width
@@ -68,50 +64,34 @@ def config_is_cfs_subplot(ax,df):
     # bar 4 co
 
     bar4_position=ind -1.5 * width
+    is_chart.draw_is_cost_bar(ax, bar4_position, width * 2, bc, biztax, salesexpe, manaexpe, finexpe, asseimpaloss, pp)
 
-    bcb = ax.bar(bar4_position, bc, width*2, bottom=pp + asseimpaloss + finexpe + manaexpe + salesexpe + biztax,color='skyblue')
-    biztaxb = ax.bar(bar4_position, biztax, width*2, bottom=pp + asseimpaloss + finexpe + manaexpe + salesexpe,color='navy')
-    salesexpeb = ax.bar(bar4_position, salesexpe, width*2, bottom=pp + asseimpaloss + finexpe + manaexpe,color='dodgerblue')
-    manaexpeb = ax.bar(bar4_position, manaexpe, width*2, bottom=pp + asseimpaloss + finexpe,color='lightskyblue')
-    finexpeb = ax.bar(bar4_position, finexpe, width*2, bottom=pp + asseimpaloss,color='palegreen')
-    asseimpalossb = ax.bar(bar4_position, asseimpaloss, width*2, bottom=pp,color='cornflowerblue')
-    ppb = ax.bar(bar4_position, pp, width*2,color='purple')
+    # bcb = ax.bar(bar4_position, bc, width*2, bottom=pp + asseimpaloss + finexpe + manaexpe + salesexpe + biztax,color='skyblue')
+    # biztaxb = ax.bar(bar4_position, biztax, width*2, bottom=pp + asseimpaloss + finexpe + manaexpe + salesexpe,color='navy')
+    # salesexpeb = ax.bar(bar4_position, salesexpe, width*2, bottom=pp + asseimpaloss + finexpe + manaexpe,color='dodgerblue')
+    # manaexpeb = ax.bar(bar4_position, manaexpe, width*2, bottom=pp + asseimpaloss + finexpe,color='lightskyblue')
+    # finexpeb = ax.bar(bar4_position, finexpe, width*2, bottom=pp + asseimpaloss,color='palegreen')
+    # asseimpalossb = ax.bar(bar4_position, asseimpaloss, width*2, bottom=pp,color='cornflowerblue')
+    # ppb = ax.bar(bar4_position, pp, width*2,color='purple')
 
 
 
     # bar 6 co
     bar5_position = bar4_position
+    is_chart.draw_is_net_profit_bar(ax, bar5_position, width, nonoreve, nonoexpe, noncassetsdisl, incotaxexpe,
+                                    netprofit)
 
-    # nonoreveb = ax.bar(bar2_position, nonoreve, width * 6, bottom=inveinco + pouninco + inteinco + otherbizinco,
-    #                    color='black')
-    #
-    # nonoexpeb = ax.bar(bar5_position, nonoexpe, width, bottom=netprofit + incotaxexpe + noncassetsdisl,color='darkslateblue')
-    nonopb=ax.bar(bar5_position, nonoreve-nonoexpe, width, bottom=netprofit + incotaxexpe + noncassetsdisl,color='darkslateblue')
 
-    noncassetsdislb = ax.bar(bar5_position, noncassetsdisl, width, bottom=netprofit + incotaxexpe,color='darkblue')
-    incotaxexpeb = ax.bar(bar5_position, incotaxexpe, width, bottom=netprofit,color='black')
-    netprofitb = ax.bar(bar5_position, netprofit, width,color='m')
 
     # cfs bars
-    # bar 7 cfs op cash in
     bar6_position=ind+1.5*width
-    opcashinflb = ax.bar(bar6_position, opcashinfl, width*2, color='salmon')
-    #bar 8 cfs op cash out + op cash net
-    opcashoutfb = ax.bar(bar6_position, opcashoutf, width, bottom=mananetr, color='skyblue')
-    mananetrb = ax.bar(bar6_position, mananetr, width, color='darkviolet')
-
-    # invcashinflb = ax.bar(ind + 2 * width, invcashinfl, width)
-    # invcashoutfb = ax.bar(ind + 3 * width, invcashoutf, width, bottom=invnetcashflow)
-    # invnetcashflowb = ax.bar(ind + 3 * width, invnetcashflow, width)
-    #
-    # fincashinflb = ax.bar(ind + 4 * width, fincashinfl, width)
-    # fincashoutfb = ax.bar(ind + 5 * width, fincashoutf, width, bottom=finnetcflow)
-    # finnetcflowb = ax.bar(ind + 5 * width, finnetcflow, width)
+    cfs_chart.draw_cfs_biz_cash_bar(ax, bar6_position, width * 2, bizcashinfl, bizcashoutf, mananetr)
 
     ax.set_xticks(ind )
     ax.set_xticklabels(stock_code)
     for tick2 in ax.get_xticklabels():
         tick2.set_rotation(90)
+    ax.legend(loc='upper right')
 
 def merge_is_cfs():
     df_cfs_all = pd.read_excel('../data/cfs_采掘行业.xlsx')
