@@ -1,10 +1,10 @@
 #-*-coding:utf-8 -*-
 from xueqiu import get_data
 # from xueqiu import write_f10_xls
-import readStockList
+import stock_reader
 import urllib.request
 import json
-import readStockList
+import stock_reader
 
 
 import os

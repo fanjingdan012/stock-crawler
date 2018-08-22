@@ -1,6 +1,7 @@
 from xlrd import open_workbook
 import pandas as pd
 
+
 def read_stock_list(sh_sz, range_start, range_end):
     stock_list = []
     stockxls = '../data/stocks.xlsx'
@@ -28,13 +29,13 @@ def read_industry_stock_list(range_start, range_end):
     return stock_list
 
 
-def read_industry_stock_list2(industry):
-    dfo = pd.read_excel('../data/industry.xlsx')
+def read_sw_industry_stock_df(industry):
+    dfo = pd.read_excel('../data/SwClass.xlsx')
     df = dfo[dfo['industry'] == industry]
     return df
 
 
-def read_industry_stock_list_by_code(stock_code):
-    dfo = pd.read_excel('../data/industry.xlsx')
-    df = dfo[dfo['code'] == stock_code]
+def read_sw_industry_stock_df_by_code(stock_code):
+    dfo = pd.read_excel('../data/SwClass.xlsx')
+    df = dfo[dfo['stock_code'] == stock_code]
     return df

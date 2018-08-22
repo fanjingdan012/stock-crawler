@@ -1,6 +1,6 @@
 import urllib.request
 import json
-import readStockList
+import stock_reader
 import xlrd
 import xlwt
 from xlutils.copy import copy
@@ -258,7 +258,7 @@ def get_bs_for_range_stocks():
     range_start = 2871
     range_end = 2908
     fromRow = 1
-    stock_list = readStockList.read_industry_stock_list2('化工行业')
+    stock_list = stock_reader.read_industry_stock_list2('化工行业')
     data = get_data(stock_list, '/stock/f10/balsheet.json?size=10000&page=1', '../data/bs_化工行业')
     write_f10_xls(fromRow, data, '../data/bs_化工行业')
 
@@ -277,7 +277,7 @@ def get_cfs_for_range_stocks():
     range_start=2871
     range_end=2908
     fromRow=1
-    stock_list = readStockList.read_industry_stock_list2('家电行业')
+    stock_list = stock_reader.read_industry_stock_list2('家电行业')
     data = get_data( stock_list, '/stock/f10/cfstatement.json?size=10000&page=1', '../data/cfs_家电')
     write_f10_xls(fromRow, data, '../data/cfs_家电')
 
@@ -308,7 +308,7 @@ def get_is_for_range_stocks():
     range_start=2871
     range_end=2908
     fromRow=1
-    stock_list = readStockList.read_industry_stock_list(range_start, range_end)
+    stock_list = stock_reader.read_industry_stock_list(range_start, range_end)
     data = xueqiu.get_data(stock_list, '/stock/f10/incstatement.json?size=10000&page=1','../data/is_家电')
     xueqiu.write_f10_xls(fromRow,data,'../data/is_家电')
 

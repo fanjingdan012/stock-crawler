@@ -1,7 +1,7 @@
 # -*-coding:utf-8 -*-
 import urllib.request
 import json
-import readStockList
+import stock_reader
 import MySQLdb
 import xlrd
 import xlwt

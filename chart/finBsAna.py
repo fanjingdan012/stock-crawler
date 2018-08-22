@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 from matplotlib import style
+from matplotlib.font_manager import FontProperties
 if __name__ == "__main__":
     style.use('ggplot')
     dfo=pd.read_excel('../data/bs1.xls',skiprows=1)

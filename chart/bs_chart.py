@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 from matplotlib import style
+from matplotlib.font_manager import FontProperties
 
 
 def draw_bs_bars(ax,position,width,ca,la,cl,ll,e):
@@ -34,17 +35,39 @@ def draw_bs_subplot(ax,df):
         tick.set_rotation(90)
     ax.legend(loc='upper right')
 
+def draw_industry_bs_subplot(ax,df):
+    width=0.3
+
+    name = df['name']
+    a = df['totasset']
+    ca = df['totcurrasset']
+    la = df['totalnoncassets']
+    ind = np.arange(len(name))  # the x locations for the groups
+    b=df['totliabsharequi']
+    cl=df['totalcurrliab']
+    ll=df['totalnoncliab']
+    l=df['totliab']
+    e=df['righaggr']
+    draw_bs_bars(ax, ind, width, ca, la, cl, ll, e)
+
+    ax.set_xticks(ind + width / 2)
+    font = FontProperties(fname=r"C:\\windows\\fonts\\simsun.ttc")
+    ax.set_xticklabels(name,size='small',rotation=90,fontproperties=font)
+    ax.legend(loc='upper right')
 
 if __name__ == '__main__':
 
     style.use('ggplot')
-    dfo=pd.read_excel('../data/bs_SH600795.xlsx')
+
 
     # fig, ax = plt.subplots(figsize=(15,8))
     fig = plt.figure()
+    dateparse = lambda dates: pd.datetime.strptime(dates, '%Y%m%d')
+    dfo = pd.read_excel('../data/bs_化工行业.xls', skiprows=1, parse_dates=['reportdate'], date_parser=dateparse)
+    df = dfo[dfo['reportdate'] == '20170930']
+    df.fillna(0, inplace=True)
     ax = fig.add_subplot(211)
-    draw_bs_subplot(ax,dfo)
-
+    draw_industry_bs_subplot(ax,df)
 
     ax2 = fig.add_subplot(212)
     width=0.3

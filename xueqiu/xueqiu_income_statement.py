@@ -1,7 +1,7 @@
 #-*-coding:utf-8 -*-
 import urllib.request
 import json
-import readStockList
+import stock_reader
 
 
 import os
@@ -11,7 +11,7 @@ import pandas as pd
 
 def getIncomeStatements(shOrSz,rangeStart,rangeEnd):
     headers = xueqiu.get_headers()
-    stockList = readStockList.readStockList(shOrSz,rangeStart,rangeEnd)
+    stockList = stock_reader.readStockList(shOrSz, rangeStart, rangeEnd)
     print(stockList)
     incomeStatements = []
     for stock in stockList:

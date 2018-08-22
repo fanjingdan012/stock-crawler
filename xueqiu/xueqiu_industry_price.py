@@ -5,7 +5,7 @@ from xueqiu import getHeaders
 from xueqiu import getFieldColDict
 import urllib.request
 import xueqiu
-import readStockList
+import stock_reader
 import pandas as pd
 import numpy as np
 import xlrd

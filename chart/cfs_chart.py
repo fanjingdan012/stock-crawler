@@ -2,6 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 from mpl_toolkits.mplot3d import axes3d
+from matplotlib.font_manager import FontProperties
 
 def draw_cfs_biz_cash_bar(ax,position,width,bizcashinfl,bizcashoutf,mananetr):
     biz_cash_in_flow_bar = ax.bar(position, bizcashinfl, width, color='salmon',label='biz cash in flow')

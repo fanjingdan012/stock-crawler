@@ -3,7 +3,7 @@
 import urllib.request
 import json
 #import eastmoney.eastmoneyStockList
-import readStockList
+import stock_reader
 #import MySQLdb
 import xlrd
 import xlwt

@@ -1,6 +1,6 @@
 # 雪球爬虫
 # 爬取
-run xueqiu_balance_sheet.py  
+run xueqiu/xueqiu_crawler.py  
 如果雪球拒绝，请更改xueqiu.py的header(打开chrome访问雪球 F12)
 ![data](docs/pics/data.PNG)
 # 可视化

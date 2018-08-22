@@ -3,126 +3,42 @@ import numpy as np
 import pandas as pd
 from mpl_toolkits.mplot3d import axes3d
 import industry
-import is_chart
-import cfs_chart
+import chart.is_chart as is_chart
+import chart.cfs_chart as cfs_chart
+import chart.is_cfs_chart as is_cfs_chart
+import stock_reader
+from matplotlib.font_manager import FontProperties
 
-def config_is_cfs_subplot(ax,df):
-    width = 0.12
-    # cfs var
-
-    stock_code = df['code']
-    bizcashinfl = df['bizcashinfl']
-    bizcashoutf = df['bizcashoutf']
-    mananetr = df['mananetr']
-
-    invcashinfl = df['invcashinfl']
-    invcashoutf = df['invcashoutf']
-    invnetcashflow = df['invnetcashflow']
-
-    fincashinfl = df['fincashinfl']
-    fincashoutf = df['fincashoutf']
-    finnetcflow = df['finnetcflow']
-
-
-
-
-    # is var
-    t = df['enddate']
-    bti = df['biztotinco']
-    bi = df['bizinco']
-    inteinco = df['inteinco']
-    pouninco = df['pouninco']
-    otherbizinco = df['otherbizinco']
-    btc = df['biztotcost']
-    bc = df['bizcost']
-    pp = df['perprofit']
-    biztax = df['biztax']
-    salesexpe = df['salesexpe']
-    manaexpe = df['manaexpe']
-    finexpe = df['finexpe_is']
-    asseimpaloss = df['asseimpaloss']
-    inveinco = df['inveinco']
-    nonoreve = df['nonoreve']
-    nonoexpe = df['nonoexpe']
-    noncassetsdisl = df['noncassetsdisl']
-    incotaxexpe = df['incotaxexpe']
-    netprofit = df['netprofit_is']
-
-    ind = np.arange(len(t))  # the x locations for the groups
-
-    # bar1 inco
-    # btib = ax.bar(ind, bti, width*8,color='silver')
-
-    # bar 2 inco
-    bar2_position=ind
-    is_chart.draw_is_income_bar(ax,bar2_position,width*6,bi,otherbizinco,inveinco,pouninco,inteinco)
-
-    # bar 3 co
-    # bar3_position=ind - 3 * width
-    # rects3 = ax.bar(bar3_position, btc, width, bottom=pp,color='blue')
-
-    # bar 4 co
-
-    bar4_position=ind -1.5 * width
-    is_chart.draw_is_cost_bar(ax, bar4_position, width * 2, bc, biztax, salesexpe, manaexpe, finexpe, asseimpaloss, pp)
-
-    # bcb = ax.bar(bar4_position, bc, width*2, bottom=pp + asseimpaloss + finexpe + manaexpe + salesexpe + biztax,color='skyblue')
-    # biztaxb = ax.bar(bar4_position, biztax, width*2, bottom=pp + asseimpaloss + finexpe + manaexpe + salesexpe,color='navy')
-    # salesexpeb = ax.bar(bar4_position, salesexpe, width*2, bottom=pp + asseimpaloss + finexpe + manaexpe,color='dodgerblue')
-    # manaexpeb = ax.bar(bar4_position, manaexpe, width*2, bottom=pp + asseimpaloss + finexpe,color='lightskyblue')
-    # finexpeb = ax.bar(bar4_position, finexpe, width*2, bottom=pp + asseimpaloss,color='palegreen')
-    # asseimpalossb = ax.bar(bar4_position, asseimpaloss, width*2, bottom=pp,color='cornflowerblue')
-    # ppb = ax.bar(bar4_position, pp, width*2,color='purple')
-
-
-
-    # bar 6 co
-    bar5_position = bar4_position
-    is_chart.draw_is_net_profit_bar(ax, bar5_position, width, nonoreve, nonoexpe, noncassetsdisl, incotaxexpe,
-                                    netprofit)
-
-
-
-    # cfs bars
-    bar6_position=ind+1.5*width
-    cfs_chart.draw_cfs_biz_cash_bar(ax, bar6_position, width * 2, bizcashinfl, bizcashoutf, mananetr)
-
-    ax.set_xticks(ind )
-    ax.set_xticklabels(stock_code)
-    for tick2 in ax.get_xticklabels():
-        tick2.set_rotation(90)
-    ax.legend(loc='upper right')
-
-def merge_is_cfs():
-    df_cfs_all = pd.read_excel('../data/cfs_采掘行业.xlsx')
-    df_is_all = pd.read_excel('../data/is_采掘行业.xlsx')
-    df_is_cfs = pd.merge(df_cfs_all, df_is_all, left_on=['code','enddate'], right_on = ['code','enddate'],copy=True, indicator='both',suffixes=('_cfs','_is'))
-    df_is_cfs.to_excel('../data/is_cfs_采掘行业.xlsx')
+def merge_industry_is_cfs(str_industry):
+    df_cfs_all = pd.read_excel('../data/cfs_'+str_industry+'.xlsx')
+    df_is_all = pd.read_excel('../data/is_'+str_industry+'.xlsx')
+    df_merged = pd.merge(df_cfs_all, df_is_all, left_on=['stock_code','enddate'], right_on = ['stock_code','enddate'],copy=True, indicator='both',suffixes=('_cfs','_is'))
+    # df_merged.fillna(0, inplace=True)
+    df_merged.to_excel('../data/is_cfs_'+str_industry+'.xlsx')
+    return df_merged
 
 
 if __name__ == "__main__":
     plt.style.use('ggplot')
+    str_industry='传媒'
+    # step 1 append
+    # df_industry = stock_reader.read_sw_industry_stock_df(str_industry)
+    # industry.append_reports_for_industry(str_industry,df_industry)
 
-    #caijue
-    stock_code_list = ["SZ000552", "SZ000571", "SZ000655", "SZ000723", "SZ000762", "SZ000780", "SZ000937", "SZ000968",
-                       "SZ000983", "SZ002128", "SZ002207", "SZ002554", "SZ002629", "SZ002738", "SZ002828", "SZ300157",
-                       "SZ300164", "SZ300191", "SH600121", "SH600123", "SH600157", "SH600188", "SH600295", "SH600339",
-                       "SH600348", "SH600395", "SH600397", "SH600403", "SH600408", "SH600508", "SH600532", "SH600546",
-                       "SH600583", "SH600725", "SH600740", "SH600758", "SH600759", "SH600777", "SH600792", "SH600871",
-                       "SH600971", "SH600997", "SH601001", "SH601011", "SH601015", "SH601088", "SH601101", "SH601225",
-                       "SH601666", "SH601699", "SH601808", "SH601857", "SH601898", "SH601918", "SH601969", "SH603113",
-                       "SH603505", "SH603619", "SH603727", "SH603979"]
+    # step 2 merge
+    # df_is_cfs=merge_industry_is_cfs(str_industry)
 
-    # industry.collect_reports_for_industry(stock_code_list)
+    dateparse = lambda dates: pd.datetime.strptime(dates, '%Y%m%d')
+    df_is_cfs = pd.read_excel('../data/is_cfs_'+str_industry+'.xlsx', parse_dates=['enddate'], date_parser=dateparse)
+    # df_is_cfs = pd.read_excel('../data/is_cfs_'+str_industry+'.xlsx',converters={'enddate':str})
 
-
-    df_is_cfs = pd.read_excel('../data/is_cfs_采掘行业.xlsx',converters={'enddate':str})
-    # df_is_cfs.fillna(0, inplace=True)
     # print(df_is_cfs.keys())
+
     df_is_cfs=df_is_cfs[df_is_cfs['enddate']=='20161231']
+    df_is_cfs = df_is_cfs.sort_values(by=['bizinco'],ascending=False)
     # df_is_cfs = df_is_cfs[df_is_cfs['code']=='SZ000552']
     fig, ax = plt.subplots(figsize=(20, 8))
     # print(df_is_cfs)
-    config_is_cfs_subplot(ax,df_is_cfs)
+    is_cfs_chart.draw_industry_is_cfs_subplot(ax,df_is_cfs)
     plt.show()
 

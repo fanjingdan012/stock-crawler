@@ -1,7 +1,7 @@
 #-*-coding:utf-8 -*-
 import urllib.request
 import json
-import readStockList
+import stock_reader
 import MySQLdb
 import xlrd
 import xlwt
@@ -10,7 +10,7 @@ import os
 from xueqiu import getHeaders
 def getCompInfo(shOrSz,rangeStart,rangeEnd):
     headers = getHeaders()
-    stockList = readStockList.readStockList(shOrSz,rangeStart,rangeEnd)
+    stockList = stock_reader.readStockList(shOrSz, rangeStart, rangeEnd)
     print(stockList)
 
 
