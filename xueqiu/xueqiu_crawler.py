@@ -11,7 +11,7 @@ def get_reports_for_1_stock(stock_code):
 
 
 if __name__=="__main__":
-    df=stock_reader.read_sw_industry_stock_df('传媒')
+    df=stock_reader.read_sw_industry_stock_df('电气设备')
     for stock_code in df['stock_code']:
         get_reports_for_1_stock(stock_code)
         print("craw:%s" % (stock_code))
