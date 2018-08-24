@@ -25,11 +25,11 @@ if __name__ == "__main__":
     str_industry='电气设备'
         #'传媒'
     # step 1 append
-    df_industry = stock_reader.read_sw_industry_stock_df(str_industry)
-    industry.append_reports_for_industry(str_industry,df_industry)
+    # df_industry = stock_reader.read_sw_industry_stock_df(str_industry)
+    # industry.append_reports_for_industry(str_industry,df_industry)
 
     # step 2 merge
-    df_is_cfs=merge_industry_is_cfs(str_industry)
+    # df_is_cfs=merge_industry_is_cfs(str_industry)
 
     # step 2.1 read merged excel
     dateparse = lambda dates: pd.datetime.strptime(dates, '%Y%m%d')
@@ -37,7 +37,7 @@ if __name__ == "__main__":
     # df_is_cfs = pd.read_excel('../data/is_cfs_'+str_industry+'.xlsx',converters={'enddate':str})
 
     # print(df_is_cfs.keys())
-    str_enddate='20101231'
+    str_enddate='20171231'
     df_is_cfs=df_is_cfs[df_is_cfs['enddate']==str_enddate]
     df_is_cfs = df_is_cfs.sort_values(by=['bizinco'],ascending=False)
     # df_is_cfs = df_is_cfs[df_is_cfs['code']=='SZ000552']

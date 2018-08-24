@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<style type="text/css">
+img{
+    width: 100%;
+    height:auto;
+}
+</style>
+<script>
+function Refresh() {
+    document.getElementById("tableDiv").innerHTML="<table id=\"STKTable\" border=\"1\">  <tr>    <th>Stock</th>    <th>Name</th>    <th>分时</th>    <th>日k</th>    <th>周k</th>    <th>月k</th>  </tr></table>";
+    var stocksStr = document.getElementById("taStocks").value;
+    var stocks = JSON.parse(stocksStr);
+    var row = 1;
+    for (i in stocks){
+		printLine(row, stocks[i]);
+		row++;
+    }
+
+
+}
+function printLine(row, stock) {
+    var x = document.getElementById('STKTable').insertRow(row);
+    var cell0 = x.insertCell(0);
+    var cell1 = x.insertCell(1);
+    var cell2 = x.insertCell(2);
+    var cell3 = x.insertCell(3);
+    var cell4 = x.insertCell(4);
+    var cell5 = x.insertCell(5);
+    cell0.innerHTML = stock;
+    cell1.innerHTML = "<a href='https://xueqiu.com/S/"+stock+"' target='_blank'>"+stock+"</a>";
+    cell2.innerHTML = "<img src='http://image.sinajs.cn/newchart/min/n/"+stock+".gif' />";
+    cell3.innerHTML = "<img src='http://image.sinajs.cn/newchart/daily/n/"+stock+".gif' />";
+    cell4.innerHTML = "<img src='http://image.sinajs.cn/newchart/weekly/n/"+stock+".gif' />";
+    cell5.innerHTML = "<img src='http://image.sinajs.cn/newchart/monthly/n/"+stock+".gif' />";
+}
+</script>
+<textarea id="taStocks" rows="5" cols="100">
+["sh600569","sh600660","sh600708","sh600795","sh601028","sh601390","sh601398","sz000338","sz000623","sz000860","sz002172","sh600926","sz000333"]
+</textarea>
+<input type="button" onclick="Refresh();" value="Refresh">
+<div id="tableDiv">
+	<p>Click Refresh button</p>
+</div>
+</body>
+</html>

@@ -13,12 +13,49 @@ def draw_bs_bars(ax,position,width,ca,la,cl,ll,e):
     long_term_liability_bar = ax.bar(position + width, ll, width, bottom=e, color='b',label='long term liability')
     current_liability_bar = ax.bar(position + width, cl, width, bottom=e + ll,label='current liability')
 
+# def draw_detailed_current_asset_bars(ax,position,width,):
+#     cash_bar=ax.bar(position + width, curfds, width, bottom=la,label='cash')
+#     cash_bar=ax.bar(position + width, tradfinasset, width, bottom=la,label='cash')
+#     cash_bar=ax.bar(position + width, notesrece, width, bottom=la,label='cash')
+#     cash_bar=ax.bar(position + width, accorece, width, bottom=la,label='cash')
+#     cash_bar=ax.bar(position + width, prep, width, bottom=la,label='cash')
+#     cash_bar=ax.bar(position + width, premrece, width, bottom=la,label='cash')
+
+
+# curfds	tradfinasset	notesrece	accorece	prep	premrece	interece	dividrece	otherrece	expotaxrebarece	subsrece	margrece	intelrece	inve	prepexpe	unseg	expinoncurrasset	othercurrasse	currassetitse	currasseform	totcurrasset	lendandloan	avaisellasse	holdinvedue
+
 
 def draw_bs_subplot(ax,df):
     width = 0.3
     t = df['reportdate']
     a = df['totasset']
     ca = df['totcurrasset']
+
+    curfds = df['curfds']
+    tradfinasset=df['tradfinasset']
+    notesrece = df['notesrece']
+    accorece = df['accorece']
+    prep = df['prep']
+    premrece = df['premrece']
+    interece = df['interece']
+    dividrece = df['dividrece']
+    otherrece = df['otherrece']
+    expotaxrebarece = df['expotaxrebarece']
+    subsrece = df['subsrece']
+    margrece = df['margrece']
+    intelrece = df['intelrece']
+    inve = df['inve']
+    prepexpe = df['prepexpe']
+    unseg = df['unseg']
+    expinoncurrasset = df['expinoncurrasset']
+    othercurrasse = df['othercurrasse']
+    currassetitse = df['currassetitse']
+    currasseform = df['currasseform']
+    totcurrasset = df['totcurrasset']
+    lendandloan = df['lendandloan']
+    avaisellasse = df['avaisellasse']
+    holdinvedue = df['holdinvedue']
+
     la = df['totalnoncassets']
     ind = np.arange(len(t))  # the x locations for the groups
 
@@ -38,7 +75,7 @@ def draw_bs_subplot(ax,df):
 def draw_industry_bs_subplot(ax,df):
     width=0.3
 
-    name = df['name']
+    name = df['stock_name']
     a = df['totasset']
     ca = df['totcurrasset']
     la = df['totalnoncassets']
@@ -58,23 +95,31 @@ def draw_industry_bs_subplot(ax,df):
 if __name__ == '__main__':
 
     style.use('ggplot')
-
-
+    str_industry = '电气设备'
+    str_reportdate='20171231'
     # fig, ax = plt.subplots(figsize=(15,8))
-    fig = plt.figure()
+    fig = plt.figure(figsize=(50, 20))
     dateparse = lambda dates: pd.datetime.strptime(dates, '%Y%m%d')
-    dfo = pd.read_excel('../data/bs_化工行业.xls', skiprows=1, parse_dates=['reportdate'], date_parser=dateparse)
-    df = dfo[dfo['reportdate'] == '20170930']
+    dfo = pd.read_excel('../data/bs_'+str_industry+'.xlsx',  parse_dates=['reportdate'], date_parser=dateparse)
+    df = dfo[dfo['reportdate'] == str_reportdate]
     df.fillna(0, inplace=True)
-    ax = fig.add_subplot(211)
+    df = df.sort_values(by=['totasset'], ascending=False)
+    ax = fig.add_subplot(111)
     draw_industry_bs_subplot(ax,df)
 
-    ax2 = fig.add_subplot(212)
-    width=0.3
-    df2 = pd.read_excel('../data/bs_SZ002172.xlsx')# dfo#[dfo['code']=='SZ002287']
+    # ax2 = fig.add_subplot(212)
+    # width=0.3
+    # df2 = pd.read_excel('../data/bs_SZ002172.xlsx')# dfo#[dfo['code']=='SZ002287']
+    # draw_bs_subplot(ax2, df2)
 
-    draw_bs_subplot(ax2, df2)
+    plt.savefig('../data/charts/bs_' + str_industry + '_' + str_reportdate + '.jpg')
     plt.show()
+
+
+
+
+
+
 
 
 
