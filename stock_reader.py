@@ -30,13 +30,13 @@ def read_industry_stock_list(range_start, range_end):
 
 
 def read_sw_industry_stock_df(industry):
-    dfo = pd.read_excel('../data/SwClass.xlsx')
+    dfo = pd.read_csv('../data/SwClass.csv')
     df = dfo[dfo['industry'] == industry]
     df=df[df['is_end'] == 'N']
     return df
 
 
 def read_sw_industry_stock_df_by_code(stock_code):
-    dfo = pd.read_excel('../data/SwClass.xlsx')
+    dfo = pd.read_csv('../data/SwClass.csv')
     df = dfo[dfo['stock_code'] == stock_code]
     return df

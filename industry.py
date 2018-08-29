@@ -5,9 +5,9 @@ import pandas as pd
 def append_reports_for_industry(industry,df_industry):
     for i in range(0, len(df_industry)):
         stock_code=df_industry.iloc[i]['stock_code']
-        df_cfs = pd.read_excel('../data/cfs_'+stock_code+'.xlsx')  # , skiprows=1
-        df_is = pd.read_excel('../data/is_'+stock_code+'.xlsx')
-        df_bs = pd.read_excel('../data/bs_'+stock_code+'.xlsx')
+        df_cfs = pd.read_excel('../data/cfs/cfs_'+stock_code+'.xlsx')  # , skiprows=1
+        df_is = pd.read_excel('../data/is/is_'+stock_code+'.xlsx')
+        df_bs = pd.read_excel('../data/bs/bs_'+stock_code+'.xlsx')
         df_cfs['stock_code'] = stock_code
         df_is['stock_code'] = stock_code
         df_bs['stock_code'] = stock_code

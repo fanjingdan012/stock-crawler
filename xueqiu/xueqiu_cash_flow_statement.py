@@ -1,5 +1,5 @@
 #-*-coding:utf-8 -*-
-from xueqiu import get_data
+# from xueqiu import get_data
 # from xueqiu import write_f10_xls
 import stock_reader
 import urllib.request
@@ -29,7 +29,7 @@ def get_cfs_for_1_stock(str_stock_code):
 
 
 def get_file_name(name):
-    return '../data/cfs_'+name+'.xlsx'
+    return '../data/cfs/cfs_'+name+'.xlsx'
 
 
 

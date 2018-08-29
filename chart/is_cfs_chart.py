@@ -5,6 +5,12 @@ from mpl_toolkits.mplot3d import axes3d
 import chart.is_chart as is_chart
 import chart.cfs_chart as cfs_chart
 from matplotlib.font_manager import FontProperties
+import matplotlib
+matplotlib.use('Agg')
+import industry
+import stock_reader
+import data_preprocessor
+
 
 def draw_is_cfs_subplot(ax,df):
     width = 0.12
@@ -159,11 +165,30 @@ def draw_industry_is_cfs_subplot(ax,df):
     ax.set_xticklabels(stock_name, size='small', rotation=90, fontproperties=font)
     ax.legend(loc='upper right')
 
+def read_df_by_industry_and_enddate(str_industry,str_enddate):
+    dateparse = lambda dates: pd.datetime.strptime(dates, '%Y%m%d')
+    df_is_cfs = pd.read_excel('../data/is_cfs_'+str_industry+'.xlsx', parse_dates=['enddate'], date_parser=dateparse)
+    # df_is_cfs = pd.read_excel('../data/is_cfs_'+str_industry+'.xlsx',converters={'enddate':str})
+    # print(df_is_cfs.keys())
+    df_is_cfs=df_is_cfs[df_is_cfs['enddate']==str_enddate]
+    df_is_cfs = df_is_cfs.sort_values(by=['bizinco'],ascending=False)
+    # df_is_cfs = df_is_cfs[df_is_cfs['code']=='SZ000552']
+    return df_is_cfs
 
-if __name__ == "__main__":
+def draw_industry_is_cfs_chart_for_enddate(str_industry,str_enddate):
     plt.style.use('ggplot')
-    df_cfs = pd.read_excel('../data/cfs_SH601857.xlsx')#, skiprows=1
-    df_is = pd.read_excel('../data/is_SH601857.xlsx')
+    fig, ax = plt.subplots(figsize=(50, 20))
+    df_is_cfs = read_df_by_industry_and_enddate(str_industry, str_enddate)
+    # print(df_is_cfs)
+    draw_industry_is_cfs_subplot(ax, df_is_cfs)
+    plt.savefig('../data/charts/is_cfs_' + str_industry + '_' + str_enddate + '.jpg')
+    plt.show()
+
+
+def draw_is_cfs_chart_for_stock(str_stock_code):
+    plt.style.use('ggplot')
+    df_cfs = pd.read_excel('../data/cfs/cfs_'+str_stock_code+'.xlsx')#, skiprows=1
+    df_is = pd.read_excel('../data/is/is_'+str_stock_code+'.xlsx')
     df_cfs.fillna(0, inplace=True)
     df_is.fillna(0, inplace=True)
     # print(df_cfs.keys())
@@ -177,3 +202,7 @@ if __name__ == "__main__":
     draw_is_cfs_subplot(ax,df_is_cfs)
     plt.show()
 
+
+if __name__ == "__main__":
+    # draw_industry_is_cfs_chart_for_enddate('电子','20171231')
+    draw_is_cfs_chart_for_stock('SH600839')

@@ -95,7 +95,7 @@ def draw_industry_bs_subplot(ax,df):
 if __name__ == '__main__':
 
     style.use('ggplot')
-    str_industry = '电气设备'
+    str_industry = '电子'
     str_reportdate='20171231'
     # fig, ax = plt.subplots(figsize=(15,8))
     fig = plt.figure(figsize=(50, 20))
