@@ -18,3 +18,4 @@ run ana/is_cfs_chart.py
 ## 横向比较
 ## 银行，金融
 ## bs-cfs， bs-es 
+## ROE ROA SR/A NI/SR

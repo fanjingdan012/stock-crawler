@@ -6,11 +6,11 @@ import stock_reader
 
 import os
 
-import xueqiu
+import xueqiu.xueqiu_base as xueqiu_base
 import pandas as pd
 
 def getIncomeStatements(shOrSz,rangeStart,rangeEnd):
-    headers = xueqiu.get_headers()
+    headers = xueqiu_base.get_headers()
     stockList = stock_reader.readStockList(shOrSz, rangeStart, rangeEnd)
     print(stockList)
     incomeStatements = []
@@ -29,12 +29,12 @@ def getIncomeStatements(shOrSz,rangeStart,rangeEnd):
 
 
 def get_file_name(name):
-    return '../data/is_'+name+'.xlsx'
+    return '../data/is/is_'+name+'.xlsx'
 
 def get_is_for_1_stock(str_stock_code):
     # stock_list=readStockList.read_industry_stock_list_by_code(stock_code)
     # data = get_data(stock_list, '/stock/f10/balsheet.json?size=10000&page=1', '../data/bs_'+stock_id)
-    str_response=xueqiu.get_response('https://xueqiu.com/stock/f10/incstatement.json?size=10000&page=1&symbol='+str_stock_code)
+    str_response=xueqiu_base.get_response('https://xueqiu.com/stock/f10/incstatement.json?size=10000&page=1&symbol='+str_stock_code)
     # write_f10_xls(1, data, '../data/bs_'+stock_id)
     json_data = json.loads(str_response)
 
