@@ -23,13 +23,13 @@ if __name__=="__main__":
     # df_is_cfs = data_preprocessor.merge_industry_is_cfs_bs_match_begindate_bsdate(str_industry)
 
     #step 3.1 calculate some rates
-    data_preprocessor.calc_profit_ability(str_industry)
+    # data_preprocessor.calc_profit_ability(str_industry)
 
     # step 4 draw chart
     # df = stock_reader.read_sw_industry_stock_df(str_industry)
     # for stock_code in df['stock_code']:
-    #     is_cfs_bs_chart.draw_industry_is_cfs_bs_chart_for_stock(str_industry, stock_code)
-    # enddates=[ '20171231','20161231','20151231','20141231','20131231','20121231','20111231','20101231' ]
+    # is_cfs_bs_chart.draw_industry_is_cfs_bs_chart_for_stock(str_industry, 'SZ000002')
+    # enddates=['20161231','20151231','20141231','20131231','20121231','20111231','20101231' ]
     # for enddate in enddates:
     #     is_cfs_bs_chart.draw_industry_is_cfs_bs_chart_for_enddate(str_industry, enddate)
 
