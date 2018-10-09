@@ -105,11 +105,11 @@ def draw_industry_is_cfs_bs_subplot(ax,df,x):
     bs_position = ind
     bs_chart.draw_bs_bars(ax,bs_position,width,ca,la,cl,ll,e)
     ax.set_xticks(ind )
-    font = FontProperties(fname=r"C:\\windows\\fonts\\simsun.ttc")
+    font = FontProperties(fname=r"C:\\windows\\fonts\\simsun.ttc",size='xx-large')
     if x=='stock_code':
-        ax.set_xticklabels(stock_code+"_"+stock_name, size='small', rotation=90, fontproperties=font)
+        ax.set_xticklabels(stock_code+"_"+stock_name, size='xx-large', rotation=90, fontproperties=font)
     else:
-        ax.set_xticklabels(t, size='small', rotation=90, fontproperties=font)
+        ax.set_xticklabels(t, size='xx-large', rotation=90, fontproperties=font)
     ax.legend(loc='upper left')
 
 
