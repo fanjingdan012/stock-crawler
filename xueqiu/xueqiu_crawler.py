@@ -12,10 +12,10 @@ def get_reports_for_1_stock(stock_code):
 
 
 if __name__=="__main__":
-    # df=stock_reader.read_sw_industry_stock_df('电子')
     stock_codes=[
-
-
+    # 银行
+    # 非银金融
+    # 综合
     ]
     for stock_code in stock_codes:
     # for stock_code in df['stock_code']:

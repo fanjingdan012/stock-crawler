@@ -21,7 +21,7 @@ def get_headers ():
            #'Connection':'keep-alive',
            #'Accept':'*/*',
            'cookie':
-           'device_id=2190831616ca50845068b5e57ac16812; s=fh1146h1wd; _ga=GA1.2.1023145669.1516348405; __utmz=1.1533125297.21.7.utmcsr=fanjingdan012.github.io|utmccn=(referral)|utmcmd=referral|utmcct=/stock-overview/; __lnkrntdmcvrd=-1; _gid=GA1.2.1284092726.1538959602; __utma=1.1023145669.1516348405.1538314405.1538959618.26; aliyungf_tc=AQAAACYvvTW86gwAafyfc8dwSRdF1Zhd; xq_a_token=bb7610f538b447ebadd6a374cdff374206f350dd; xq_a_token.sig=XglA1uiAYkfyfKlhbuJdRhRTTM4; xq_r_token=c946fa437eff0f7b251c2a7babd12b5c9e5a1851; xq_r_token.sig=jW7KrLgtGYffUvfG3DfPexDR8RQ; u=361538983746480; Hm_lvt_1db88642e346389874251b5a1eded6e3=1538314388,1538486017,1538959601,1538983746; Hm_lpvt_1db88642e346389874251b5a1eded6e3=1538983746; _gat_gtag_UA_16079156_4=1'
+           'device_id=2190831616ca50845068b5e57ac16812; s=fh1146h1wd; _ga=GA1.2.1023145669.1516348405; Hm_lvt_1db88642e346389874251b5a1eded6e3=1538983746,1539323491,1539658510,1539684873; __utmc=1; __utmz=1.1539684873.30.8.utmcsr=google|utmccn=(organic)|utmcmd=organic|utmctr=(not%20provided); aliyungf_tc=AQAAADLqJCbnVQcAafyfc+whRVV2mMnm; xq_a_token=8bb19a6c97ce8d72f0be4bcd51c906d270351669; xq_a_token.sig=D4IqV9nRrz2tk-MvcHsG0JxH_Jg; xq_r_token=892351a6205473ee21f05d419e3d2833127e1b1f; xq_r_token.sig=_E0ixyb9ctAQc_TN-YXfd28l7HQ; u=301540361430380; _gid=GA1.2.2123854954.1540361430; _gat_gtag_UA_16079156_4=1; __lnkrntdmcvrd=-1; Hm_lpvt_1db88642e346389874251b5a1eded6e3=1540361449; __utma=1.1023145669.1516348405.1539684873.1540361450.31; __utmt=1; __utmb=1.1.10.1540361450'
     }
 
 

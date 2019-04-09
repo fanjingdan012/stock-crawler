@@ -4,7 +4,12 @@ import industry
 import data_preprocessor
 import chart.is_cfs_bs_chart as is_cfs_bs_chart
 if __name__=="__main__":
-    str_industry = '化工'
+
+
+    # str_industry = '商业贸易'
+    # str_industry = '休闲服务'
+    str_industry = '有色金属'
+
     # # step 0 download
     # df=stock_reader.read_sw_industry_stock_df(str_industry)
     # for stock_code in df['stock_code']:
@@ -37,5 +42,5 @@ if __name__=="__main__":
     # for enddate in enddates:
     #     is_cfs_bs_chart.draw_industry_is_cfs_bs_chart_for_enddate(str_industry, enddate)
 
-    is_cfs_bs_chart.draw_industry_is_cfs_bs_chart_for_stock(str_industry,'SH600091')
+    # is_cfs_bs_chart.draw_industry_is_cfs_bs_chart_for_stock(str_industry,'SH600153')
     # is_cfs_bs_chart.draw_industry_is_cfs_bs_chart_for_enddate(str_industry,'20171231')
