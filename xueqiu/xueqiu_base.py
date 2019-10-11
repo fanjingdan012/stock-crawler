@@ -3,7 +3,7 @@
 import urllib.request
 import json
 #import eastmoney.eastmoneyStockList
-import stock_reader
+# import stock_reader
 #import MySQLdb
 import xlrd
 import xlwt
@@ -21,7 +21,7 @@ def get_headers ():
            #'Connection':'keep-alive',
            #'Accept':'*/*',
            'cookie':
-           'device_id=2190831616ca50845068b5e57ac16812; s=fh1146h1wd; _ga=GA1.2.1023145669.1516348405; Hm_lvt_1db88642e346389874251b5a1eded6e3=1538983746,1539323491,1539658510,1539684873; __utmc=1; __utmz=1.1539684873.30.8.utmcsr=google|utmccn=(organic)|utmcmd=organic|utmctr=(not%20provided); aliyungf_tc=AQAAADLqJCbnVQcAafyfc+whRVV2mMnm; xq_a_token=8bb19a6c97ce8d72f0be4bcd51c906d270351669; xq_a_token.sig=D4IqV9nRrz2tk-MvcHsG0JxH_Jg; xq_r_token=892351a6205473ee21f05d419e3d2833127e1b1f; xq_r_token.sig=_E0ixyb9ctAQc_TN-YXfd28l7HQ; u=301540361430380; _gid=GA1.2.2123854954.1540361430; _gat_gtag_UA_16079156_4=1; __lnkrntdmcvrd=-1; Hm_lpvt_1db88642e346389874251b5a1eded6e3=1540361449; __utma=1.1023145669.1516348405.1539684873.1540361450.31; __utmt=1; __utmb=1.1.10.1540361450'
+           'xq_a_token=d831cd39b53563679545656fba1f4efd8e48faa0; xq_r_token=fd2f0f487c8298cad8e7519f1560abb7a18c589d; u=591570784098346; device_id=24700f9f1986800ab4fcc880530dd0ed; Hm_lvt_1db88642e346389874251b5a1eded6e3=1570784103; s=c41y4i0ez4; Hm_lpvt_1db88642e346389874251b5a1eded6e3=1570784511'
     }
 
 

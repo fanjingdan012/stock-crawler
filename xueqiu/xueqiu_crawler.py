@@ -13,6 +13,7 @@ def get_reports_for_1_stock(stock_code):
 
 if __name__=="__main__":
     stock_codes=[
+        'SH600900'
     # 银行
     # 非银金融
     # 综合
