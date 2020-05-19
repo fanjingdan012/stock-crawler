@@ -7,7 +7,7 @@
 <h2>A股收盘概览</h2>
 <p>大小表示成交额，颜色表示涨跌幅，点击以进入，点击最上方长条以返回上级</p>
 <br> Date (yyyy-MM-dd):
-<input type="text" id="dateInput" value="2018-03-06">
+<input type="text" id="dateInput" value="2020-05-19">
 <input type="button" onclick="showTreeMap();" value="Refresh">
 <p id="chart">
 <p id="rawdata">
@@ -70,7 +70,7 @@
         }
 
 
-    	d3.csv("https://raw.githubusercontent.com/fanjingdan012/stock-crawler/master/static/industry_quote/"+date+".csv", function(csv_data){
+    	d3.csv("https://raw.githubusercontent.com/fanjingdan012/stock-crawler/master/docs/static/industry_quote/"+date+".csv", function(csv_data){
 
 			// Add, remove or change the key values to change the hierarchy. 
       var nested_data = d3.nest()
